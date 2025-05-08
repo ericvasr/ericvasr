@@ -1,0 +1,8 @@
+requests>=2.25.0
+pandas>=1.1.0
+numpy>=1.19.0
+matplotlib>=3.3.0
+seaborn>=0.11.0
+plotly>=5.0.0
+kaleido>=0.2.1  # Opcional, para exportação de imagens
+imageio>=2.9.0  # Opcional, para criação de GIFs 

@@ -6,10 +6,36 @@ Sou o fundador da **BeOnSafe**, atuo com IA, automações e desenvolvimento de s
 
 > Visualize minha dedicação e ritmo de contribuição de forma interativa e moderna.
 
-![Painel 3D](./profile-3d-contrib/github-contribution-grid-snake.gif)
+![Painel 3D](images/github_3d_beonsafe.gif)
 
+[📊 Versão Interativa](images/github_3d_beonsafe.html) _(Atualizado em 08/05/2025)_
+
+---
+
+## 📋 Sobre o Git3D
+
+Git3D é uma ferramenta desenvolvida pela BeOnSafe que cria visualizações 3D interativas e impressionantes das contribuições no GitHub. Ideal para:
+
+- Incluir no seu perfil do GitHub
+- Exibir em seu portfólio profissional
+- Compartilhar em redes sociais
+- Analisar seus padrões de contribuição
+
+## 🚀 Como Usar
+
+Execute o script principal e siga as instruções:
+
+```bash
+python run_git3d.py [seu_usuario_github]
+```
+
+Para mais detalhes, consulte a [documentação completa](./README_GIT3D.md).
 
 ---
 
 🔗 Projeto BeOnSafe: https://github.com/ericvasr  
 📬 eric@beonsafe.com.br
+
+---
+
+Desenvolvido com 💙 pela BeOnSafe

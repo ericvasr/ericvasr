@@ -1,0 +1,47 @@
+# Arquivos e diretórios específicos do Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Arquivos de visualização gerados
+contrib_data.csv
+images/*.png
+images/*.gif
+images/*.html
+
+# Diretórios temporários
+temp_frames/
+
+# IDE e editores
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+
+# Arquivos de ambiente e segurança
+.env
+.env.*
+*.pem
+secrets.json .history/
