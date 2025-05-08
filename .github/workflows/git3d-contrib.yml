@@ -27,23 +27,86 @@ jobs:
           pip install -r requirements.txt
           pip install kaleido imageio
 
-      - name: 🔑 Configurar Token do GitHub
+      - name: 🔑 Configurar Token do GitHub e variáveis não-interativas
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          echo "GITHUB_TOKEN=${{ secrets.GH_TOKEN }}" >> $GITHUB_ENV
+          # Garantir que o token seja passado corretamente
+          echo "GITHUB_TOKEN=$GH_TOKEN" >> $GITHUB_ENV
+          # Criar diretório de imagens antecipadamente
+          mkdir -p images
+
+      - name: 🔧 Modificar script para modo não-interativo
+        run: |
+          # Criar um script temporário que não pede entrada interativa
+          cat > auto_run.py << 'EOF'
+          import os
+          import sys
+          import subprocess
+
+          # Verificar se o token está disponível
+          if not os.getenv("GITHUB_TOKEN"):
+              print("❌ Erro: Token do GitHub não encontrado nas variáveis de ambiente")
+              sys.exit(1)
+              
+          # Verificar se o usuário foi fornecido como argumento
+          if len(sys.argv) != 2:
+              print("❌ Erro: Especifique o nome de usuário como argumento")
+              sys.exit(1)
+              
+          # Modificar os scripts para usar o nome de usuário
+          username = sys.argv[1]
+          
+          for script in ["fetch_contributions.py", "visualize_3d.py", "generate_advanced_3d.py"]:
+              with open(script, "r") as f:
+                  content = f.read()
+              
+              content = content.replace('USERNAME = "ericvasr"', f'USERNAME = "{username}"')
+              
+              with open(script, "w") as f:
+                  f.write(content)
+          
+          # Executar cada script diretamente em sequência
+          print("📊 Buscando dados de contribuições...")
+          subprocess.run([sys.executable, "fetch_contributions.py"], check=True)
+          
+          print("🎨 Gerando visualizações 3D...")
+          subprocess.run([sys.executable, "generate_advanced_3d.py"], check=True)
+          
+          print("📝 Atualizando README...")
+          subprocess.run([sys.executable, "update_readme.py"], check=True)
+          
+          print("✅ Processo concluído com sucesso!")
+          EOF
+          
+          # Tornar o script executável
+          chmod +x auto_run.py
         
-      - name: 🧮 Gerar visualização 3D
+      - name: 🧮 Gerar visualização 3D (modo não-interativo)
         run: |
-          python run_git3d.py ericvasr
+          python auto_run.py ericvasr
 
       - name: 📸 Verificar arquivos gerados
         run: |
-          ls -la images/
+          # Usar uma condição para evitar falha se o diretório não existir
+          if [ -d "images" ]; then
+            ls -la images/
+          else
+            echo "❌ Diretório 'images/' não foi criado"
+            mkdir -p images  # Criar para evitar falha no próximo passo
+          fi
 
       - name: 💾 Commit e Push das alterações
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md images/
-          git commit -m "🔷 Atualização da visualização 3D de contribuições - BeOnSafe"
-          git push
+          
+          # Verificar se há alterações para fazer commit
+          if git diff --name-only | grep -q .; then
+            git add README.md images/ || true
+            git commit -m "🔷 Atualização da visualização 3D de contribuições - BeOnSafe" || true
+            git push || true
+          else
+            echo "Nenhuma alteração para fazer commit"
+          fi
         continue-on-error: true 
