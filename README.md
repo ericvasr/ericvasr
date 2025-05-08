@@ -6,7 +6,7 @@ Sou o fundador da **BeOnSafe**, atuo com IA, automações e desenvolvimento de s
 
 > Visualize minha dedicação e ritmo de contribuição de forma interativa e moderna.
 
-![Painel 3D](./profile-3d-contrib/profile-3d-contrib.gif)
+![Painel 3D](./profile-3d-contrib/github-contribution-grid-snake.svg)
 
 ---
 
