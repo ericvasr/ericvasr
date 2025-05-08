@@ -6,9 +6,9 @@ Sou o fundador da **BeOnSafe**, atuo com IA, automações e desenvolvimento de s
 
 > Visualize minha dedicação e ritmo de contribuição de forma interativa e moderna.
 
-![Painel 3D](https://raw.githubusercontent.com/ericvasr/ericvasr/main/images/github_3d_beonsafe.gif)
+![Painel 3D](https://camo.githubusercontent.com/c690d12894108f3deeb6b6123086373726133877ce7c9c0a73fe61961ced5d25/68747470733a2f2f706c61636577697a2e636f6d2f696d672f736c6964657273686f772f736c696465732f6769745f7669736832322e676966)
 
-[📊 Versão Interativa](https://htmlpreview.github.io/?https://github.com/ericvasr/ericvasr/blob/main/images/github_3d_beonsafe.html) _(Atualizado em 08/05/2025)_
+[📊 Versão Interativa](https://htmlpreview.github.io/?https://github.com/ericvasr/ericvasr/blob/main/images/github_3d_beonsafe.html) _(Atualizado em 15/05/2024)_
 
 ---
 
