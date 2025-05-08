@@ -91,22 +91,44 @@ jobs:
           # Usar uma condição para evitar falha se o diretório não existir
           if [ -d "images" ]; then
             ls -la images/
+            echo "Conteúdo do diretório images:"
+            find images -type f | sort
           else
             echo "❌ Diretório 'images/' não foi criado"
             mkdir -p images  # Criar para evitar falha no próximo passo
           fi
 
-      - name: 💾 Commit e Push das alterações
+      - name: 🔄 Corrigir caminhos no README
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Atualizar caminhos das imagens para URLs absolutas
+          sed -i 's|![Painel 3D](images/github_3d_beonsafe.gif)|![Painel 3D](https://raw.githubusercontent.com/ericvasr/ericvasr/main/images/github_3d_beonsafe.gif)|g' README.md
+          sed -i 's|\[📊 Versão Interativa\](images/github_3d_beonsafe.html)|\[📊 Versão Interativa\](https://htmlpreview.github.io/?https://github.com/ericvasr/ericvasr/blob/main/images/github_3d_beonsafe.html)|g' README.md
+          sed -i 's|\[documentação completa\](./README_GIT3D.md)|\[documentação completa\](https://github.com/ericvasr/ericvasr/blob/main/README_GIT3D.md)|g' README.md
           
-          # Verificar se há alterações para fazer commit
-          if git diff --name-only | grep -q .; then
-            git add README.md images/ || true
-            git commit -m "🔷 Atualização da visualização 3D de contribuições - BeOnSafe" || true
-            git push || true
+          # Exibir o conteúdo do README após as alterações
+          echo "Conteúdo atualizado do README.md:"
+          grep -A 2 "![Painel 3D]" README.md || true
+
+      - name: 💾 Garantir que todos os arquivos sejam adicionados
+        run: |
+          # Exibir status do git
+          git status
+          
+          # Adicionar todos os arquivos
+          git add README.md || true
+          git add images/ || true
+          git add *.csv || true
+          git add *.html || true
+          
+          # Verificar se há mudanças para commit
+          if git status --porcelain | grep -q .; then
+            echo "Mudanças detectadas, preparando commit"
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -m "🔷 Atualização da visualização 3D de contribuições - BeOnSafe [$(date +%Y-%m-%d)]"
+            git push
+            echo "✅ Commit e push realizados com sucesso!"
           else
-            echo "Nenhuma alteração para fazer commit"
+            echo "Nenhuma alteração detectada para commit"
           fi
         continue-on-error: true 

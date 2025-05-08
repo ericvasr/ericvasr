@@ -6,9 +6,9 @@ Sou o fundador da **BeOnSafe**, atuo com IA, automações e desenvolvimento de s
 
 > Visualize minha dedicação e ritmo de contribuição de forma interativa e moderna.
 
-![Painel 3D](images/github_3d_beonsafe.gif)
+![Painel 3D](https://raw.githubusercontent.com/ericvasr/ericvasr/main/images/github_3d_beonsafe.gif)
 
-[📊 Versão Interativa](images/github_3d_beonsafe.html) _(Atualizado em 08/05/2025)_
+[📊 Versão Interativa](https://htmlpreview.github.io/?https://github.com/ericvasr/ericvasr/blob/main/images/github_3d_beonsafe.html) _(Atualizado em 08/05/2025)_
 
 ---
 
@@ -29,7 +29,7 @@ Execute o script principal e siga as instruções:
 python run_git3d.py [seu_usuario_github]
 ```
 
-Para mais detalhes, consulte a [documentação completa](./README_GIT3D.md).
+Para mais detalhes, consulte a [documentação completa](https://github.com/ericvasr/ericvasr/blob/main/README_GIT3D.md).
 
 ---
 
