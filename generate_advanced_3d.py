@@ -36,44 +36,38 @@ except Exception as e:
 USERNAME = "ericvasr"
 logger.info(f"🧑‍💻 Gerando visualização para usuário: {USERNAME}")
 
-# Paleta de cores profissional BeOnSafe
-BEONSAFE_COLORS = {
-    'primary': '#005CB8',       # Azul principal mais intenso
-    'secondary': '#00A4FF',     # Azul secundário mais vibrante
-    'accent': '#FF5500',        # Laranja mais vibrante
-    'dark': '#002E5C',          # Azul escuro mais profundo
-    'light': '#E1F0FF',         # Azul claro
-    'text': '#1A1A1A',          # Texto quase preto
-    'background': '#FFFFFF',    # Fundo branco
-    'highlight': '#FFCC00',     # Amarelo de destaque
-    'gradient1': '#004080',     # Gradiente escuro
-    'gradient2': '#0080FF',     # Gradiente médio
-    'gradient3': '#80BFFF',     # Gradiente claro
-    'success': '#00CC66',       # Verde sucesso
-    'warning': '#FFC107',       # Amarelo alerta
-    'dark_edge': '#001F3D'      # Azul escuro para bordas
+# Paleta de cores tecnológica em tons escuros - Estilo Cyberpunk/Tech Noir
+TECH_COLORS = {
+    'background': '#0A0E17',      # Fundo muito escuro (quase preto com tom azulado)
+    'surface': '#121822',         # Superfície um pouco mais clara que o fundo
+    'primary': '#0C4A6E',         # Azul escuro tecnológico
+    'secondary': '#065A82',       # Azul médio tecnológico
+    'accent': '#00CFFD',          # Azul neon brilhante (cyan)
+    'accent2': '#7B61FF',         # Roxo/violeta neon
+    'highlight': '#00FFC6',       # Verde-água neon
+    'warning': '#FFB200',         # Laranja/amarelo
+    'error': '#FF4365',           # Vermelho/rosa neon
+    'text_primary': '#E2E8F0',    # Texto principal (quase branco com tom azulado)
+    'text_secondary': '#94A3B8',  # Texto secundário (cinza claro)
+    'grid': '#1E293B',            # Linhas de grade (azul muito escuro)
+    'low_activity': '#0F172A',    # Atividade baixa (quase preto)
+    'medium_activity': '#065A82', # Atividade média (azul escuro)
+    'high_activity': '#00CFFD'    # Atividade alta (azul neon)
 }
 
-# Gerar uma paleta de cores personalizada melhorada para as contribuições
-def generate_professional_colorscale(colors_dict, steps=10):
-    base_colors = [
-        colors_dict['dark_edge'],
-        colors_dict['gradient1'],
-        colors_dict['primary'],
-        colors_dict['secondary'],
-        colors_dict['gradient3'],
-        colors_dict['highlight']
+# Gerar uma paleta de cores tecnológica para as contribuições
+def generate_tech_colorscale():
+    # Escala gradiente mais tecnológica
+    return [
+        [0.0, TECH_COLORS['low_activity']],
+        [0.2, TECH_COLORS['primary']],
+        [0.5, TECH_COLORS['secondary']],
+        [0.8, TECH_COLORS['accent']],
+        [1.0, TECH_COLORS['highlight']]
     ]
-    
-    colorscale = []
-    for i, color in enumerate(base_colors):
-        position = i / (len(base_colors) - 1)
-        colorscale.append([position, color])
-    
-    return colorscale
 
-# Colorscale profissional
-beonsafe_colorscale = generate_professional_colorscale(BEONSAFE_COLORS)
+# Colorscale tecnológica
+tech_colorscale = generate_tech_colorscale()
 
 # Processamento para visualização 3D
 earliest_date = df['date'].min()
@@ -198,61 +192,92 @@ def add_surface_texture(z_values):
             # Se for zero, adicionar um valor muito pequeno para textura
             if textured_z[i, j] == 0:
                 textured_z[i, j] = np.random.uniform(0.01, 0.05)
+            # Amplificar valores não zero para tornar o gráfico mais impressionante
+            else:
+                factor = 1.1 + (0.1 * np.random.random())  # Fator de amplificação aleatório
+                textured_z[i, j] *= factor
     
     return textured_z
 
 # Aplicar textura
 textured_z = add_surface_texture(z_values)
 
-# ============= CRIA DASHBOARD PROFISSIONAL COM MÚLTIPLOS GRÁFICOS =============
+# Criar uma malha auxiliar para efeitos de linhas/grades brilhantes
+def create_grid_mesh(weeks, days):
+    # Coordenadas de linha vertical (constante em x)
+    line_x = []
+    line_y = []
+    line_z = []
+    
+    for w in range(total_weeks):
+        for d in range(7):
+            if d == 0 or d == 6:  # Destacar apenas os fins de semana
+                line_x.append(w)
+                line_y.append(d)
+                line_z.append(0)  # Linha na base
+    
+    # Coordenadas de linha horizontal (constante em y)
+    for d in range(7):
+        for w in range(0, total_weeks, 4):  # A cada 4 semanas
+            line_x.append(w)
+            line_y.append(d)
+            line_z.append(0)  # Linha na base
+    
+    return line_x, line_y, line_z
+
+# Criar linhas de grade
+grid_x, grid_y, grid_z = create_grid_mesh(weeks, days)
+
+# ============= CRIA DASHBOARD TECNOLÓGICO COM MÚLTIPLOS GRÁFICOS =============
 # Criar uma figura com subplots para um dashboard completo
 fig = make_subplots(
     rows=1, cols=1, 
     specs=[[{'type': 'surface'}]],
-    subplot_titles=[f"<b>Contribuições 3D do GitHub - {USERNAME}</b>"]
+    subplot_titles=[f"<b>GitHub Analytics 3D - {USERNAME}</b>"]
 )
 
 # Adiciona o gráfico de superfície 3D com efeitos avançados
 surface = go.Surface(
-    z=z_values,
+    z=textured_z,
     x=week_grid,
     y=day_grid,
-    colorscale=beonsafe_colorscale,
+    colorscale=tech_colorscale,
     colorbar=dict(
         title=dict(
             text="Contribuições",
             font=dict(
                 size=14, 
-                family="Arial", 
-                color=BEONSAFE_COLORS['dark']
+                family="Orbitron, Arial, sans-serif", 
+                color=TECH_COLORS['text_primary']
             )
         ),
         tickfont=dict(
             size=12, 
-            family="Arial", 
-            color=BEONSAFE_COLORS['dark']
+            family="Orbitron, Arial, sans-serif", 
+            color=TECH_COLORS['text_primary']
         ),
         len=0.75,
         thickness=20,
         outlinewidth=1,
-        outlinecolor=BEONSAFE_COLORS['dark_edge']
+        outlinecolor=TECH_COLORS['accent'],
+        bgcolor=TECH_COLORS['background'],
     ),
     lighting=dict(
-        ambient=0.65,
-        diffuse=0.9,
-        fresnel=0.25,
-        roughness=0.1,
-        specular=1.0,
+        ambient=0.4,
+        diffuse=0.8,
+        fresnel=0.8,
+        roughness=0.4,
+        specular=1.5,
     ),
     contours=dict(
         z=dict(
             show=True,
             width=1.5,
-            color="white",
-            highlightcolor=BEONSAFE_COLORS['highlight']
+            color=TECH_COLORS['accent'],
+            highlightcolor=TECH_COLORS['highlight']
         )
     ),
-    opacity=0.95,  # Ligeira transparência para efeito profissional
+    opacity=0.92,  # Ligeira transparência para efeito tecnológico
     showscale=True,
     hoverinfo='all',
     hovertemplate=
@@ -263,10 +288,25 @@ surface = go.Surface(
     customdata=np.array([dias_semana[i] for i in range(7)] * total_weeks).reshape(total_weeks, 7)
 )
 
+# Adicionar linhas de grade neon
+grid_trace = go.Scatter3d(
+    x=grid_x,
+    y=grid_y,
+    z=grid_z,
+    mode='lines',
+    line=dict(
+        color=TECH_COLORS['accent'],
+        width=2
+    ),
+    opacity=0.4,
+    showlegend=False
+)
+
 # Adicionar efeitos de iluminação e profundidade
 fig.add_trace(surface)
+fig.add_trace(grid_trace)
 
-# Configurar o layout para um design premium
+# Configurar o layout para um design technológico
 dias_semana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
 
 # Adicionar informações de datas aos eixos
@@ -278,11 +318,11 @@ for i in range(0, total_weeks, 4):  # A cada 4 semanas
 
 fig.update_layout(
     title=dict(
-        text=f"<b>Visualização 3D Premium - Contribuições GitHub</b><br><span style='font-size:18px;'>{USERNAME}</span>",
+        text=f"<b>Análise Avançada de Contribuições GitHub</b><br><span style='font-size:18px;'>{USERNAME}</span>",
         font=dict(
-            family="Montserrat, Arial Black, sans-serif",
+            family="Orbitron, Tahoma, sans-serif",
             size=26,
-            color=BEONSAFE_COLORS['dark']
+            color=TECH_COLORS['accent']
         ),
         x=0.5,
         y=0.97
@@ -290,52 +330,52 @@ fig.update_layout(
     autosize=True,
     width=1500,
     height=950,
-    paper_bgcolor=BEONSAFE_COLORS['background'],
-    plot_bgcolor=BEONSAFE_COLORS['background'],
+    paper_bgcolor=TECH_COLORS['background'],
+    plot_bgcolor=TECH_COLORS['background'],
     scene=dict(
         xaxis=dict(
             title=dict(
                 text="Semanas",
-                font=dict(family="Arial", size=14, color=BEONSAFE_COLORS['dark'])
+                font=dict(family="Orbitron, Arial, sans-serif", size=14, color=TECH_COLORS['text_primary'])
             ),
             tickvals=list(date_ticks.keys()),
             ticktext=list(date_ticks.values()),
-            gridcolor="#E5E5E5",
+            gridcolor=TECH_COLORS['grid'],
             showbackground=True,
-            backgroundcolor=BEONSAFE_COLORS['light'],
-            zerolinecolor=BEONSAFE_COLORS['primary'],
+            backgroundcolor=TECH_COLORS['surface'],
+            zerolinecolor=TECH_COLORS['accent'],
             showspikes=False
         ),
         yaxis=dict(
             title=dict(
                 text="Dias da Semana",
-                font=dict(family="Arial", size=14, color=BEONSAFE_COLORS['dark'])
+                font=dict(family="Orbitron, Arial, sans-serif", size=14, color=TECH_COLORS['text_primary'])
             ),
             ticktext=dias_semana,
             tickvals=list(range(7)),
-            gridcolor="#E5E5E5",
+            gridcolor=TECH_COLORS['grid'],
             showbackground=True,
-            backgroundcolor=BEONSAFE_COLORS['light'],
-            zerolinecolor=BEONSAFE_COLORS['primary'],
+            backgroundcolor=TECH_COLORS['surface'],
+            zerolinecolor=TECH_COLORS['accent'],
             showspikes=False
         ),
         zaxis=dict(
             title=dict(
                 text="Contribuições",
-                font=dict(family="Arial", size=14, color=BEONSAFE_COLORS['dark'])
+                font=dict(family="Orbitron, Arial, sans-serif", size=14, color=TECH_COLORS['text_primary'])
             ),
-            gridcolor="#E5E5E5",
+            gridcolor=TECH_COLORS['grid'],
             showbackground=True,
-            backgroundcolor=BEONSAFE_COLORS['light'],
-            zerolinecolor=BEONSAFE_COLORS['primary'],
+            backgroundcolor=TECH_COLORS['surface'],
+            zerolinecolor=TECH_COLORS['accent'],
             showspikes=False
         ),
         camera=dict(
-            eye=dict(x=1.7, y=-1.7, z=0.9),
+            eye=dict(x=1.8, y=-1.6, z=1.1),
             center=dict(x=0, y=0, z=-0.15)  # Ajuste para melhor visualização
         ),
         aspectmode='manual',
-        aspectratio=dict(x=2, y=1, z=0.7)
+        aspectratio=dict(x=2, y=1, z=0.9)  # Aumentada a altura Z para maior impacto visual
     ),
     margin=dict(l=10, r=10, b=10, t=80),
     legend=dict(
@@ -344,19 +384,23 @@ fig.update_layout(
         y=1.05,
         xanchor="center",
         x=0.5,
-        font=dict(size=14, color=BEONSAFE_COLORS['dark'])
+        font=dict(
+            family="Orbitron, Arial, sans-serif",
+            size=14, 
+            color=TECH_COLORS['text_primary']
+        )
     ),
 )
 
 # Adicionar informações e estatísticas avançadas
 data_atual = datetime.now().strftime("%d/%m/%Y")
 
-# Card de estatísticas avançadas
+# Card de estatísticas avançadas com estilo tecnológico
 stats_html = f"""
-<div style='font-family:Arial; padding:12px; background-color:{BEONSAFE_COLORS['light']}; 
-     border:1px solid {BEONSAFE_COLORS['primary']}; border-radius:8px;'>
-  <span style='font-weight:bold; color:{BEONSAFE_COLORS['dark']}; font-size:16px;'>🌟 Métricas de Desempenho:</span><br>
-  <span style='color:{BEONSAFE_COLORS['dark']}; font-size:14px;'>
+<div style='font-family:Orbitron, Arial; padding:15px; background-color:{TECH_COLORS['surface']}; 
+     border:1px solid {TECH_COLORS['accent']}; border-radius:5px; box-shadow: 0 0 10px {TECH_COLORS['accent']}'>
+  <span style='font-weight:bold; color:{TECH_COLORS['accent']}; font-size:16px;'>⚡ MÉTRICAS DE DESEMPENHO</span><br>
+  <span style='color:{TECH_COLORS['text_primary']}; font-size:14px;'>
     <b>Total:</b> {total_contributions} contribuições | 
     <b>Média:</b> {avg_daily:.1f} por dia | 
     <b>Taxa de Atividade:</b> {activity_rate:.1f}%<br>
@@ -377,10 +421,10 @@ fig.add_annotation(
     align="center",
 )
 
-# Adicionar uma borda profissional ao redor de toda a visualização
+# Adicionar uma borda tecnológica ao redor de toda a visualização
 fig.update_layout(
     shapes=[
-        # Borda externa
+        # Borda externa estilo tecnológico
         dict(
             type="rect",
             xref="paper",
@@ -390,7 +434,7 @@ fig.update_layout(
             x1=1,
             y1=1,
             line=dict(
-                color=BEONSAFE_COLORS['dark_edge'],
+                color=TECH_COLORS['accent'],
                 width=2,
             ),
             layer="below"
@@ -398,46 +442,46 @@ fig.update_layout(
     ]
 )
 
-# Adicionar logo e marca d'água premium BeOnSafe
+# Adicionar logo e marca d'água tecnológica
 fig.add_annotation(
-    text="<b>Powered by BeOnSafe</b> | Premium Visualization",
+    text=f"<b>POWERED BY BEONSAFE</b> | TECH ANALYTICS ENGINE",
     x=0.99,
     y=0.03,
     xref="paper",
     yref="paper",
     showarrow=False,
     font=dict(
-        family="Arial",
+        family="Orbitron, Arial, sans-serif",
         size=14,
-        color=BEONSAFE_COLORS['accent']
+        color=TECH_COLORS['accent']
     ),
     align="right",
-    bgcolor="rgba(255, 255, 255, 0.8)",
-    bordercolor=BEONSAFE_COLORS['dark_edge'],
+    bgcolor=f"rgba(10, 14, 23, 0.85)",
+    bordercolor=TECH_COLORS['accent'],
     borderwidth=1,
-    borderpad=4,
-    opacity=0.9
+    borderpad=5,
+    opacity=0.95
 )
 
-# Adicionar data de geração
+# Adicionar data de geração com estilo tecnológico
 fig.add_annotation(
-    text=f"<b>Atualizado em</b> {data_atual}",
+    text=f"<b>ATUALIZADO EM</b> {data_atual}",
     x=0.01,
     y=0.03,
     xref="paper",
     yref="paper",
     showarrow=False,
     font=dict(
-        family="Arial",
+        family="Orbitron, Arial, sans-serif",
         size=14,
-        color=BEONSAFE_COLORS['dark']
+        color=TECH_COLORS['text_primary']
     ),
     align="left",
-    bgcolor="rgba(255, 255, 255, 0.8)",
-    bordercolor=BEONSAFE_COLORS['dark_edge'],
+    bgcolor=f"rgba(10, 14, 23, 0.85)",
+    bordercolor=TECH_COLORS['accent'],
     borderwidth=1,
-    borderpad=4,
-    opacity=0.9
+    borderpad=5,
+    opacity=0.95
 )
 
 # Criar diretório para as imagens se não existir
@@ -474,17 +518,28 @@ logger.info("✅ Visualização HTML interativa salva")
 fig.write_image("images/github_3d_beonsafe.png", scale=3, engine="kaleido")
 logger.info("✅ Imagem estática de alta resolução salva")
 
-# Configurações para animação premium
+# Configurações para animação premium - efeitos mais dinâmicos
 frames = []
 for i in range(0, 360, 3):  # Movimento mais suave com mais frames
     angle_rad = np.radians(i)
+    
+    # Movimento de câmera mais dinâmico e tecnológico
     camera = dict(
         eye=dict(
             x=1.8 * np.cos(angle_rad),
             y=1.8 * np.sin(angle_rad),
-            z=0.8 + 0.2 * np.sin(angle_rad/2)  # Movimento de oscilação vertical
+            z=1.2 + 0.4 * np.sin(angle_rad/2)  # Amplitude maior para movimento vertical
         ),
-        center=dict(x=0, y=0, z=-0.1 + 0.05 * np.sin(angle_rad/4))  # Movimento suave do centro
+        center=dict(
+            x=0 + 0.05 * np.sin(angle_rad*2),  # Pequenas oscilações no centro
+            y=0 + 0.05 * np.cos(angle_rad*2),
+            z=-0.1 + 0.15 * np.sin(angle_rad/3)  # Movimento suave do centro
+        ),
+        up=dict(
+            x=0,
+            y=0,
+            z=1 + 0.02 * np.sin(angle_rad*3)  # Pequena variação no vetor up
+        )
     )
     frames.append(go.Frame(layout=dict(scene_camera=camera)))
 
@@ -498,15 +553,23 @@ animated_fig.update_layout(
     updatemenus=[{
         "type": "buttons",
         "buttons": [{
-            "label": "▶️ Animar",
+            "label": "▶️ INICIAR ANIMAÇÃO",
             "method": "animate",
-            "args": [None, {"frame": {"duration": 20, "redraw": True}, "fromcurrent": True, "mode": "immediate"}]
+            "args": [None, {
+                "frame": {"duration": 20, "redraw": True}, 
+                "fromcurrent": True, 
+                "mode": "immediate",
+                "transition": {"duration": 10, "easing": "cubic-in-out"}
+            }]
         }],
         "direction": "left",
         "showactive": False,
         "x": 0.1,
         "y": 0,
-        "xanchor": "right"
+        "xanchor": "right",
+        "bgcolor": TECH_COLORS['surface'],
+        "bordercolor": TECH_COLORS['accent'],
+        "font": {"color": TECH_COLORS['text_primary']}
     }]
 )
 
@@ -530,14 +593,18 @@ try:
         angle = i * (360 / total_frames)
         angle_rad = np.radians(angle)
         
-        # Câmera com movimento dinâmico
+        # Câmera com movimento dinâmico - versão melhorada
         camera = dict(
             eye=dict(
-                x=1.7 * np.cos(angle_rad),
-                y=1.7 * np.sin(angle_rad),
-                z=0.9 + 0.15 * np.sin(angle_rad/2)
+                x=1.8 * np.cos(angle_rad),
+                y=1.8 * np.sin(angle_rad), 
+                z=1.2 + 0.3 * np.sin(angle_rad/2)  # Movimento vertical mais pronunciado
             ),
-            center=dict(x=0, y=0, z=-0.15)
+            center=dict(
+                x=0 + 0.05 * np.sin(angle_rad*2),  # Pequenas oscilações no centro
+                y=0 + 0.05 * np.cos(angle_rad*2),
+                z=-0.1 + 0.1 * np.sin(angle_rad/3)
+            )
         )
         
         temp_fig = go.Figure(data=fig.data, layout=fig.layout)
@@ -545,7 +612,7 @@ try:
         
         # Salvar frame em alta resolução
         temp_file = f"temp_frames/frame_{i:03d}.png"
-        temp_fig.write_image(temp_file, scale=2, width=800, height=600)
+        temp_fig.write_image(temp_file, scale=2, width=900, height=700)
         frames_gif.append(temp_file)
     
     # Criar o GIF otimizado com melhor qualidade
@@ -556,7 +623,7 @@ try:
     imageio.mimsave(
         "images/github_3d_beonsafe.gif", 
         images, 
-        fps=12,
+        fps=14,  # FPS mais alto para movimento mais fluido
         optimize=True,
         subrectangles=True
     )
@@ -574,7 +641,7 @@ except Exception as e:
     logger.error(f"❌ Erro ao gerar GIF: {str(e)}")
     logger.error("   O GIF não foi gerado, mas as outras visualizações estão disponíveis")
 
-logger.info("\n✅ Visualizações 3D Premium BeOnSafe criadas com sucesso:")
+logger.info("\n✅ Visualizações 3D Tech Premium criadas com sucesso:")
 logger.info("  - images/github_3d_beonsafe.html (versão interativa premium)")
 logger.info("  - images/github_3d_beonsafe.png (imagem estática em alta resolução)")
 logger.info("  - images/github_3d_beonsafe_animated.html (versão animada avançada)")

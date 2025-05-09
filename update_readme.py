@@ -91,20 +91,20 @@ def criar_badges(estatisticas):
     # URLs base para criar badges
     shields_url = "https://img.shields.io"
     
-    # Cores personalizadas BeOnSafe
+    # Cores tecnológicas
     cores = {
-        "azul": "0066cc",
-        "laranja": "ff6600",
-        "verde": "00cc66",
-        "amarelo": "ffcc00",
-        "azul_escuro": "003366"
+        "azul_tech": "00CFFD",
+        "verde_tech": "00FFC6", 
+        "roxo_tech": "7B61FF",
+        "laranja_tech": "FFB200",
+        "background": "0A0E17"
     }
     
     badges = {
-        "contribuicoes": f"{shields_url}/badge/Contribuições-{estatisticas['total_contribuicoes']}-{cores['azul']}?style=for-the-badge&logo=github",
-        "sequencia": f"{shields_url}/badge/Sequência-{estatisticas['sequencia_atual']}%20dias-{cores['verde']}?style=for-the-badge&logo=firebase",
-        "pull_requests": f"{shields_url}/badge/Pull%20Requests-{estatisticas['pull_requests']}-{cores['laranja']}?style=for-the-badge&logo=git",
-        "issues": f"{shields_url}/badge/Issues-{estatisticas['issues']}-{cores['amarelo']}?style=for-the-badge&logo=jira",
+        "contribuicoes": f"{shields_url}/badge/Contribuições-{estatisticas['total_contribuicoes']}-{cores['azul_tech']}?style=for-the-badge&logo=github&logoColor=white&labelColor=0C4A6E",
+        "sequencia": f"{shields_url}/badge/Sequência-{estatisticas['sequencia_atual']}%20dias-{cores['verde_tech']}?style=for-the-badge&logo=firebase&logoColor=white&labelColor=065A82",
+        "pull_requests": f"{shields_url}/badge/Pull%20Requests-{estatisticas['pull_requests']}-{cores['roxo_tech']}?style=for-the-badge&logo=git&logoColor=white&labelColor=333333",
+        "issues": f"{shields_url}/badge/Issues-{estatisticas['issues']}-{cores['laranja_tech']}?style=for-the-badge&logo=jira&logoColor=white&labelColor=333333",
     }
     
     return badges
@@ -143,12 +143,50 @@ def atualizar_readme(caminho_readme, caminho_gif=None, caminho_html=None):
     rel_path_gif = os.path.relpath(caminho_gif, os.path.dirname(caminho_readme)) if caminho_gif and os.path.exists(caminho_gif) else None
     rel_path_html = os.path.relpath(caminho_html, os.path.dirname(caminho_readme)) if caminho_html and os.path.exists(caminho_html) else None
     
-    # Preparar a nova seção com design premium
-    nova_secao = f"""## 🔷 Painel 3D Premium de Contribuições – BeOnSafe
+    # URLs absolutas para GitHub
+    github_username = estatisticas['usuario'] or "ericvasr"
+    github_gif_url = f"https://raw.githubusercontent.com/{github_username}/{github_username}/main/images/github_3d_beonsafe.gif"
+    github_html_url = f"https://htmlpreview.github.io/?https://github.com/{github_username}/{github_username}/blob/main/images/github_3d_beonsafe.html"
+    
+    # Estilo Tech com cores escuras
+    tech_style = """
+<style>
+.tech-container {
+  background-color: #0A0E17;
+  color: #E2E8F0;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 20px;
+  border: 1px solid #00CFFD;
+  box-shadow: 0 0 15px rgba(0, 207, 253, 0.3);
+}
+.tech-header {
+  background-color: #121822;
+  color: #00CFFD;
+  padding: 10px 15px;
+  font-weight: bold;
+  border-bottom: 1px solid #00CFFD;
+}
+.tech-content {
+  padding: 15px;
+}
+.tech-footer {
+  padding: 10px 15px;
+  background-color: #121822;
+  font-size: 0.9em;
+  border-top: 1px solid #00CFFD;
+  text-align: center;
+}
+</style>
+"""
+    
+    # Preparar a nova seção com design mais tecnológico
+    nova_secao = f"""## ⚡ Analytics 3D Premium - Contribuições GitHub
 
 <div align="center">
 
-### 📊 Visualização Avançada de Atividade no GitHub
+### 📊 Visualização Avançada de Atividade
 
 [![Contribuições]({badges['contribuicoes']})](https://github.com/{estatisticas['usuario']})
 [![Sequência Atual]({badges['sequencia']})](https://github.com/{estatisticas['usuario']})
@@ -158,51 +196,44 @@ def atualizar_readme(caminho_readme, caminho_gif=None, caminho_html=None):
 </div>
 
 <table>
-  <tr>
-    <td width="60%">
-"""
-    
-    # Adicionar GIF se disponível
-    if rel_path_gif:
-        nova_secao += f"""      <img src="{rel_path_gif}" alt="Visualização 3D de Contribuições" width="100%" />
-      <p align="center"><em>🔄 Visualização 3D Interativa das Contribuições</em></p>
-"""
-    
-    # Adicionar estatísticas
-    nova_secao += f"""    </td>
-    <td width="40%">
-      <h4>📈 Métricas de Desempenho</h4>
-      <ul>
-        <li><b>Total de Contribuições:</b> {estatisticas['total_contribuicoes']}</li>
-        <li><b>Média Diária:</b> {estatisticas['media_diaria']:.1f}</li>
-        <li><b>Dias Ativos:</b> {estatisticas['dias_ativos']} ({estatisticas['taxa_atividade']:.1f}%)</li>
-        <li><b>Sequência Atual:</b> {estatisticas['sequencia_atual']} dias</li>
-        <li><b>Sequência Máxima:</b> {estatisticas['sequencia_maxima']} dias</li>
-        <li><b>Dia Mais Produtivo:</b> {estatisticas['melhor_dia']}</li>
-        <li><b>Score de Intensidade:</b> {estatisticas.get('score_intensidade', 0):.1f}%</li>
-      </ul>
+<tr>
+<td width="60%">
+<img src="{github_gif_url}" alt="Visualização 3D Tech de Contribuições" width="100%" />
+<p align="center"><em>🔄 Visualização 3D Avançada - Tecnologia BeOnSafe</em></p>
+</td>
+<td width="40%" style="background-color:#0A0E17; color:#E2E8F0;">
+<h4 style="color:#00CFFD;">⚡ MÉTRICAS DE DESEMPENHO</h4>
+<ul>
+<li><b>Total de Contribuições:</b> {estatisticas['total_contribuicoes']}</li>
+<li><b>Média Diária:</b> {estatisticas['media_diaria']:.1f}</li>
+<li><b>Dias Ativos:</b> {estatisticas['dias_ativos']} ({estatisticas['taxa_atividade']:.1f}%)</li>
+<li><b>Sequência Atual:</b> {estatisticas['sequencia_atual']} dias</li>
+<li><b>Sequência Máxima:</b> {estatisticas['sequencia_maxima']} dias</li>
+<li><b>Dia Mais Produtivo:</b> {estatisticas['melhor_dia']}</li>
+<li><b>Score de Intensidade:</b> {estatisticas.get('score_intensidade', 0):.1f}%</li>
+</ul>
 """
     
     # Adicionar informações de repositórios, se disponíveis
     if estatisticas["repositorios"]:
         nova_secao += f"""
-      <h4>🌟 Principais Repositórios</h4>
-      <ul>
+<h4 style="color:#00FFC6;">🔹 PRINCIPAIS REPOSITÓRIOS</h4>
+<ul>
 """
         for repo in estatisticas["repositorios"][:3]:  # Mostrar apenas os 3 principais
-            nova_secao += f"        <li>{repo}</li>\n"
-        nova_secao += "      </ul>\n"
+            nova_secao += f"<li>{repo}</li>\n"
+        nova_secao += "</ul>\n"
     
     # Adicionar links
     nova_secao += f"""
-      <p><a href="{rel_path_html if rel_path_html else '#'}">📊 Versão Interativa</a> _(Atualizado em {data_atual})_</p>
-      <p><a href="https://github.com/ericvasr/git3d">⚙️ Código Fonte</a> | <a href="./README_GIT3D.md">📖 Documentação</a></p>
-    </td>
-  </tr>
+<p><a href="{github_html_url}" style="color:#7B61FF;"><b>📊 VERSÃO INTERATIVA</b></a> <em>(Atualizado em {data_atual})</em></p>
+<p><a href="https://github.com/{github_username}/git3d" style="color:#00FFC6;"><b>⚙️ CÓDIGO FONTE</b></a> | <a href="https://github.com/{github_username}/git3d/blob/main/README_GIT3D.md" style="color:#00FFC6;"><b>📖 DOCUMENTAÇÃO</b></a></p>
+</td>
+</tr>
 </table>
 
 <div align="center">
-  <p><strong>Powered by <a href="https://beonsafe.com.br">BeOnSafe</a></strong> | Visualização Premium de Contribuições do GitHub</p>
+<p><b style="color:#00CFFD;">POWERED BY <a href="https://beonsafe.com.br">BEONSAFE</a></b> | Tecnologia Avançada de Visualização</p>
 </div>
 
 ---"""
