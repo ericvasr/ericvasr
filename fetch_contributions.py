@@ -28,7 +28,7 @@ except ImportError:
     logger.warning("⚠️ Módulo load_env não encontrado, usando variáveis de ambiente existentes")
 
 # Token do GitHub - obtido de forma segura
-GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+GITHUB_TOKEN = os.getenv("GH_TOKEN") or os.getenv("GITHUB_TOKEN")
 if not GITHUB_TOKEN:
     # Verificar se estamos em ambiente CI
     if os.getenv("CI") or os.getenv("GITHUB_ACTIONS"):
@@ -38,7 +38,7 @@ if not GITHUB_TOKEN:
     else:
         # Apenas solicitar entrada interativa se não estivermos em CI
         logger.warning("❌ Token do GitHub não encontrado!")
-        logger.warning("Configure o token em um arquivo .env ou defina a variável de ambiente GITHUB_TOKEN")
+        logger.warning("Configure o token em um arquivo .env ou defina a variável de ambiente GH_TOKEN")
         
         # Para ambientes interativos
         try:

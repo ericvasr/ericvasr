@@ -5,6 +5,12 @@ on:
     - cron: "0 3 * * *"  # Executa todos os dias às 3h UTC (otimizado para menor carga)
   workflow_dispatch:      # Permite execução manual
 
+# Configuração de permissões - importante para segurança
+permissions:
+  contents: write        # Para fazer commit e push
+  actions: read          # Para ler o status das ações
+  packages: read         # Para ler pacotes
+
 jobs:
   generate-3d-visualization:
     name: Gerar Visualização 3D Premium
@@ -44,15 +50,20 @@ jobs:
         run: |
           mkdir -p images
           mkdir -p logs
+          mkdir -p .cache
 
       - name: 🔑 Configurar Token do GitHub e variáveis
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          echo "GITHUB_TOKEN=${GITHUB_TOKEN}" >> $GITHUB_ENV
+          # Exportar token para variável de ambiente
+          echo "GITHUB_TOKEN=${GH_TOKEN}" >> $GITHUB_ENV
+          echo "GH_TOKEN=${GH_TOKEN}" >> $GITHUB_ENV
           echo "PYTHONUNBUFFERED=1" >> $GITHUB_ENV  # Para exibir logs em tempo real
           DATE_NOW=$(date +%Y-%m-%d)
           echo "GENERATE_DATE=${DATE_NOW}" >> $GITHUB_ENV
+          echo "USERNAME=ericvasr" >> $GITHUB_ENV
+          echo "COMPANY_NAME=BeOnSafe" >> $GITHUB_ENV
 
       - name: 🔍 Buscar dados de contribuições
         id: fetch-data
@@ -60,6 +71,14 @@ jobs:
           echo "📊 Iniciando busca de dados de contribuições..."
           # Certificar-se de que o nome de usuário correto é usado
           sed -i 's/USERNAME = "[^"]*"/USERNAME = "ericvasr"/' fetch_contributions.py
+          # Criar arquivo .env temporário para processo local
+          echo "GH_TOKEN=${GH_TOKEN}" > .env
+          echo "GITHUB_TOKEN=${GH_TOKEN}" >> .env
+          echo "USERNAME=ericvasr" >> .env
+          echo "COMPANY_NAME=BeOnSafe" >> .env
+          echo "GIT3D_CACHE_ENABLED=true" >> .env
+          echo "GIT3D_CACHE_DURATION=86400" >> .env
+          # Executar script com logs
           python fetch_contributions.py 2>&1 | tee logs/fetch_data.log
           # Verificar se os arquivos esperados foram gerados
           if [ -f "contrib_data.csv" ] && [ -f "github_user_data.json" ]; then
@@ -119,9 +138,21 @@ jobs:
             echo "⚠️ Detectados possíveis erros nos logs (verificação informativa apenas)"
           fi
 
+      - name: 🔒 Limpar arquivos sensíveis
+        run: |
+          # Remover arquivos .env temporários e outros dados sensíveis
+          if [ -f ".env" ]; then
+            rm .env
+          fi
+          
+          # Garantir que os arquivos de log não contêm informações sensíveis
+          if [ -d "logs" ]; then
+            find logs -type f -name "*.log" -exec sed -i 's/ghp_[0-9a-zA-Z]\{36\}/***REDACTED***/g' {} \;
+          fi
+
       - name: 💾 Commit e Push das alterações
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           # Configurar Git
           git config user.name "GitHub Actions Bot"

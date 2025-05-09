@@ -39,7 +39,7 @@ def carregar_env():
 
 def validate_github_token():
     """Valida se o token do GitHub está configurado e parece válido"""
-    token = os.getenv('GITHUB_TOKEN')
+    token = os.getenv('GH_TOKEN') or os.getenv('GITHUB_TOKEN')
     
     if not token:
         logger.warning("⚠️ Token do GitHub não encontrado nas variáveis de ambiente")
