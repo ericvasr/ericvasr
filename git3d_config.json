@@ -1,0 +1,23 @@
+{
+  "username": "ericvasr",
+  "company_name": "BeOnSafe",
+  "visualization": {
+    "width": 1200,
+    "height": 800,
+    "animation_frames": 120,
+    "animation_duration": 15,
+    "quality": "high",
+    "show_labels": true,
+    "show_grid": true,
+    "auto_rotate": true,
+    "export_formats": [
+      "html",
+      "png",
+      "gif"
+    ]
+  },
+  "active_theme": "tech_noir",
+  "cache_enabled": true,
+  "cache_duration": 86400,
+  "last_updated": "2025-05-09 11:47:07"
+}

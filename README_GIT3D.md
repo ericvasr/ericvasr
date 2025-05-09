@@ -18,6 +18,8 @@ Git3D Premium é uma ferramenta avançada para criar visualizações tridimensio
 - **Integração com CI/CD** via GitHub Actions para atualização automática
 - **Sistema de Logging e Monitoramento** para diagnóstico avançado
 - **Design Responsivo** otimizado para compartilhamento em diferentes plataformas
+- **Sistema de Cache Avançado** para otimização de requisições à API
+- **Ferramentas de Segurança** para garantir a proteção de dados
 
 ## 🛠️ Tecnologias Utilizadas
 
@@ -27,6 +29,7 @@ Git3D Premium é uma ferramenta avançada para criar visualizações tridimensio
 - **GitHub API GraphQL** - Coleta de dados de contribuições
 - **GitHub Actions** - Automação e integração contínua
 - **Kaleido & ImageIO** - Geração de imagens e GIFs em alta qualidade
+- **Sistema de Cache** - Otimização de requisições e performance
 
 ## 🚀 Instalação e Uso
 
@@ -87,6 +90,7 @@ Recursos avançados:
 - Tratamento robusto de erros
 - Geração de múltiplos arquivos de dados
 - Análise estatística preliminar
+- Cache inteligente para otimização de requisições
 
 ### 2. Gerador de Visualizações 3D (`generate_advanced_3d.py`)
 
@@ -95,6 +99,7 @@ Cria visualizações 3D avançadas a partir dos dados coletados:
 - Efeitos de iluminação e textura
 - Múltiplas perspectivas de câmera
 - Animação suave com rotação dinâmica
+- Temas personalizáveis através do sistema de configuração
 
 Formatos gerados:
 - HTML interativo com controles
@@ -109,6 +114,7 @@ Integra a visualização ao seu perfil GitHub:
 - Geração de badges dinâmicas
 - Layout responsivo com tabelas HTML
 - Inclusão de estatísticas detalhadas
+- Sanitização de dados para segurança
 
 ### 4. Workflow Automatizado (GitHub Actions)
 
@@ -117,20 +123,49 @@ Automatiza todo o processo diariamente:
 - Sistema de retry para operações críticas
 - Logging detalhado para diagnóstico
 - Armazenamento de artefatos para referência
+- Segurança reforçada para tokens e credenciais
+
+### 5. Sistema de Cache (`load_env.py` e `manage_cache.py`)
+
+Otimiza requisições à API do GitHub:
+- Cache baseado em arquivo com expiração configurável
+- Redução do número de requisições à API
+- Otimização de performance
+- Interface de linha de comando para gerenciamento
+- Persistência de dados entre execuções
+
+### 6. Verificador de Segurança (`security_check.py`)
+
+Analisa o projeto em busca de problemas de segurança:
+- Detecção de tokens hardcoded
+- Análise de configurações de workflow
+- Verificação de vulnerabilidades em dependências
+- Validação de arquivos sensíveis
+- Geração de relatórios detalhados
 
 ## 🧩 Personalização
 
+### Configuração Central
+
+O sistema agora utiliza um arquivo de configuração central que pode ser personalizado:
+
+```bash
+python config.py
+```
+
+Este utilitário permite configurar:
+- Nome de usuário e empresa
+- Tema visual
+- Configurações de cache
+- Parâmetros de visualização
+
 ### Cores e Tema
 
-Para personalizar a paleta de cores, edite a seção `BEONSAFE_COLORS` no arquivo `generate_advanced_3d.py`:
+Para personalizar a paleta de cores, edite o tema ativo no arquivo `config.py`:
 
 ```python
-BEONSAFE_COLORS = {
-    'primary': '#005CB8',       # Azul principal
-    'secondary': '#00A4FF',     # Azul secundário
-    'accent': '#FF5500',        # Laranja como acento
-    # ... adicione suas cores aqui
-}
+# Alterar tema ativo
+ACTIVE_THEME = "tech_noir"  # Opções: "tech_noir", "corporate", "dark_elegant"
 ```
 
 ### Configurações Avançadas
@@ -138,13 +173,34 @@ BEONSAFE_COLORS = {
 Para personalizar aspectos visuais mais avançados:
 
 1. **Dimensões e Proporções**:
-   Encontre e ajuste os parâmetros `width`, `height` e `aspectratio` no objeto `fig.update_layout`
+   Ajuste os parâmetros em `VISUALIZATION_SETTINGS` no arquivo `config.py`
 
 2. **Efeitos de Iluminação**:
-   Modifique os parâmetros de `lighting` no objeto `go.Surface`
+   Modifique os parâmetros de `lighting` no tema selecionado
 
 3. **Animação**:
-   Ajuste os parâmetros de frames e duração na seção final do código
+   Ajuste os parâmetros de frames e duração na seção de configuração
+
+## 🔒 Segurança
+
+O Git3D Premium implementa várias medidas de segurança:
+
+1. **Gestão Segura de Tokens**:
+   - Armazenamento em variáveis de ambiente
+   - Validação de tokens
+   - Proteção contra exposição acidental
+
+2. **Sanitização de Dados**:
+   - Prevenção contra XSS e injeções
+   - Validação de entrada
+   - Escape de caracteres especiais
+
+3. **Verificação de Segurança**:
+   ```bash
+   python security_check.py
+   ```
+
+Para mais detalhes, consulte o arquivo [SECURITY.md](SECURITY.md).
 
 ## 📖 Exemplo de Resultado
 
@@ -161,6 +217,21 @@ O resultado final integrado ao seu perfil inclui:
 - Nenhum dado pessoal é exposto nas visualizações
 - Todas as requisições seguem as melhores práticas de segurança
 - Dados sensíveis são filtrados dos logs e artefatos
+- Ferramentas integradas para verificação contínua de segurança
+
+## 🧪 Testes
+
+Execute os testes unitários para verificar a integridade do sistema:
+
+```bash
+python test_git3d.py
+```
+
+Os testes verificam:
+- Funcionalidade do sistema de cache
+- Sistema de temas visuais
+- Sanitização de dados
+- Detecção de problemas de segurança
 
 ## 🤝 Contribuindo
 
