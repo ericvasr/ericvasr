@@ -1,34 +1,44 @@
-# 🔷 Git3D - BeOnSafe
+# 🔷 Git3D Premium - Visualização 3D Avançada de Contribuições GitHub
 
-Visualização 3D de contribuições do GitHub com design exclusivo da BeOnSafe.
+<div align="center">
+  <img src="images/github_3d_beonsafe.gif" alt="Visualização 3D Premium" width="70%" />
+  <p><em>Visualização 3D Premium de Contribuições do GitHub - BeOnSafe</em></p>
+</div>
 
 ## 📋 Sobre o Projeto
 
-Git3D é uma ferramenta desenvolvida pela BeOnSafe para criar visualizações 3D interativas e impressionantes das suas contribuições no GitHub. Ideal para:
+Git3D Premium é uma ferramenta avançada para criar visualizações tridimensionais interativas e de alta qualidade das suas contribuições no GitHub. Desenvolvida com tecnologias de análise de dados e visualização 3D, esta ferramenta transforma seu histórico de contribuições em uma impressionante representação visual profissional.
 
-- Incluir em seu perfil do GitHub
-- Exibir em seu portfólio profissional
-- Compartilhar em redes sociais
-- Analisar seus padrões de contribuição
+### ✨ Características Premium
 
-## 🚀 Características
+- **Renderização 3D Avançada** com efeitos de iluminação e textura
+- **Gráficos Interativos** com animações suaves e controles intuitivos
+- **Análise Estatística Detalhada** de padrões de contribuição
+- **Múltiplos Formatos** incluindo HTML interativo, PNG em alta resolução e GIF otimizado
+- **Integração com CI/CD** via GitHub Actions para atualização automática
+- **Sistema de Logging e Monitoramento** para diagnóstico avançado
+- **Design Responsivo** otimizado para compartilhamento em diferentes plataformas
 
-- **Visualização 3D Interativa**: Explore suas contribuições em um modelo 3D completo
-- **Design BeOnSafe**: Identidade visual elegante com paleta exclusiva
-- **Animações**: Visualizações animadas para maior impacto visual
-- **Estatísticas Detalhadas**: Análise completa dos seus padrões de contribuição
-- **Automação**: Processo automatizado de coleta de dados e geração de visualizações
-- **Integração com README**: Atualização automática do seu perfil do GitHub
+## 🛠️ Tecnologias Utilizadas
 
-## 🛠️ Requisitos
+- **Python 3.11+** - Linguagem base para análise e processamento
+- **Pandas & NumPy** - Análise e transformação de dados
+- **Plotly** - Visualização 3D interativa avançada
+- **GitHub API GraphQL** - Coleta de dados de contribuições
+- **GitHub Actions** - Automação e integração contínua
+- **Kaleido & ImageIO** - Geração de imagens e GIFs em alta qualidade
 
-- Python 3.6 ou superior
+## 🚀 Instalação e Uso
+
+### Pré-requisitos
+
+- Python 3.11 ou superior
 - Token de acesso pessoal do GitHub
-- Dependências listadas em `requirements.txt`
+- Git instalado
 
-## ⚙️ Instalação
+### Instalação
 
-1. Clone este repositório:
+1. Clone o repositório:
    ```bash
    git clone https://github.com/ericvasr/git3d.git
    cd git3d
@@ -39,54 +49,142 @@ Git3D é uma ferramenta desenvolvida pela BeOnSafe para criar visualizações 3D
    pip install -r requirements.txt
    ```
 
-3. Para gerar GIFs (opcional, mas recomendado):
+3. Configure seu token do GitHub:
+   - Crie um arquivo `.env` na raiz do projeto
+   - Adicione seu token: `GITHUB_TOKEN=seu_token_aqui`
+
+### Execução Manual
+
+Para gerar sua própria visualização 3D premium:
+
+1. Colete os dados de contribuições:
    ```bash
-   pip install kaleido imageio
+   python fetch_contributions.py
    ```
 
-## 📊 Uso
+2. Gere a visualização 3D premium:
+   ```bash
+   python generate_advanced_3d.py
+   ```
 
-Execute o script principal e siga as instruções:
+3. Atualize seu README:
+   ```bash
+   python update_readme.py
+   ```
 
-```bash
-python run_git3d.py [seu_usuario_github]
+## 📊 Componentes do Sistema
+
+### 1. Coletor de Dados (`fetch_contributions.py`)
+
+Responsável por se conectar à API GraphQL do GitHub e coletar:
+- Histórico completo de contribuições
+- Dados detalhados de repositórios
+- Estatísticas de issues e pull requests
+- Metadados do perfil
+
+Recursos avançados:
+- Sistema de retry para requisições à API
+- Tratamento robusto de erros
+- Geração de múltiplos arquivos de dados
+- Análise estatística preliminar
+
+### 2. Gerador de Visualizações 3D (`generate_advanced_3d.py`)
+
+Cria visualizações 3D avançadas a partir dos dados coletados:
+- Superfície 3D com gradientes de cores profissionais
+- Efeitos de iluminação e textura
+- Múltiplas perspectivas de câmera
+- Animação suave com rotação dinâmica
+
+Formatos gerados:
+- HTML interativo com controles
+- PNG estático em alta resolução
+- GIF animado otimizado
+- JSON com metadados para integração
+
+### 3. Atualizador de README (`update_readme.py`)
+
+Integra a visualização ao seu perfil GitHub:
+- Criação de seção premium no README
+- Geração de badges dinâmicas
+- Layout responsivo com tabelas HTML
+- Inclusão de estatísticas detalhadas
+
+### 4. Workflow Automatizado (GitHub Actions)
+
+Automatiza todo o processo diariamente:
+- Execução programada com controle de falhas
+- Sistema de retry para operações críticas
+- Logging detalhado para diagnóstico
+- Armazenamento de artefatos para referência
+
+## 🧩 Personalização
+
+### Cores e Tema
+
+Para personalizar a paleta de cores, edite a seção `BEONSAFE_COLORS` no arquivo `generate_advanced_3d.py`:
+
+```python
+BEONSAFE_COLORS = {
+    'primary': '#005CB8',       # Azul principal
+    'secondary': '#00A4FF',     # Azul secundário
+    'accent': '#FF5500',        # Laranja como acento
+    # ... adicione suas cores aqui
+}
 ```
 
-O script irá:
-1. Solicitar seu token do GitHub (ou usar o definido em variáveis de ambiente)
-2. Baixar dados das suas contribuições
-3. Gerar visualizações 3D interativas
-4. Criar imagens estáticas e animadas
-5. Atualizar seu README.md (opcional)
+### Configurações Avançadas
 
-## 🖼️ Exemplos de Saída
+Para personalizar aspectos visuais mais avançados:
 
-- `images/github_3d_beonsafe.html` - Visualização 3D interativa
-- `images/github_3d_beonsafe.png` - Imagem estática para inclusão em documentos
-- `images/github_3d_beonsafe.gif` - Animação para inclusão em README ou redes sociais
-- `images/github_3d_beonsafe_animated.html` - Versão interativa com animação automática
+1. **Dimensões e Proporções**:
+   Encontre e ajuste os parâmetros `width`, `height` e `aspectratio` no objeto `fig.update_layout`
 
-## 📘 Personalização
+2. **Efeitos de Iluminação**:
+   Modifique os parâmetros de `lighting` no objeto `go.Surface`
 
-Você pode personalizar a visualização editando as configurações em `generate_advanced_3d.py`:
+3. **Animação**:
+   Ajuste os parâmetros de frames e duração na seção final do código
 
-- Altere a paleta de cores em `BEONSAFE_COLORS`
-- Modifique o layout e estilo em `fig.update_layout()`
-- Ajuste a animação e ângulos de visualização
+## 📖 Exemplo de Resultado
 
-## 🔐 Segurança
+O resultado final integrado ao seu perfil inclui:
 
-Seu token do GitHub é usado apenas localmente para acessar a API. Recomendamos:
-- Usar um token com permissões limitadas
-- Definir uma data de expiração curta
-- Nunca compartilhar seu token
+1. **Visualização 3D Animada** - Representação visual das suas contribuições
+2. **Painéis de Estatísticas** - Resumo de métricas importantes
+3. **Badges Dinâmicas** - Indicadores de atividade
+4. **Links Interativos** - Acesso à versão completa
 
-## 📬 Contato
+## 🛡️ Segurança e Privacidade
 
-**BeOnSafe**  
-Email: eric@beonsafe.com.br  
-GitHub: https://github.com/ericvasr
+- Os tokens do GitHub são manipulados de forma segura
+- Nenhum dado pessoal é exposto nas visualizações
+- Todas as requisições seguem as melhores práticas de segurança
+- Dados sensíveis são filtrados dos logs e artefatos
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Para contribuir:
+
+1. Faça um fork do repositório
+2. Crie uma branch para sua feature: `git checkout -b feature/nova-funcionalidade`
+3. Commit suas mudanças: `git commit -am 'Adiciona nova funcionalidade'`
+4. Push para a branch: `git push origin feature/nova-funcionalidade`
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+## ✨ Agradecimentos
+
+- Equipe BeOnSafe pelo design e suporte
+- Comunidade GitHub pela inspiração
+- Desenvolvedores das bibliotecas utilizadas
 
 ---
 
-Desenvolvido com 💙 pela BeOnSafe 
+<div align="center">
+  <p><strong>Powered by <a href="https://beonsafe.com.br">BeOnSafe</a></strong> | Visualização Premium de Contribuições GitHub</p>
+  <p>Desenvolvido por <a href="https://github.com/ericvasr">Eric Vasconcellos</a></p>
+</div> 

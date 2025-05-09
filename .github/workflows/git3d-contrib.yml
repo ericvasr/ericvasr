@@ -1,134 +1,154 @@
-name: 🔷 Atualizar Visualização 3D de Contribuições - BeOnSafe
+name: 🔷 Atualizar Visualização 3D Premium de Contribuições - BeOnSafe
 
 on:
   schedule:
-    - cron: "0 4 * * *"  # Executa todos os dias às 4h UTC
+    - cron: "0 3 * * *"  # Executa todos os dias às 3h UTC (otimizado para menor carga)
   workflow_dispatch:      # Permite execução manual
 
 jobs:
   generate-3d-visualization:
+    name: Gerar Visualização 3D Premium
     runs-on: ubuntu-latest
+    timeout-minutes: 15  # Limite de tempo para evitar execuções travadas
     
     steps:
       - name: 🔄 Checkout do repositório
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Versão mais recente
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       - name: 🐍 Configurar Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5  # Versão mais recente
         with:
-          python-version: '3.10'
+          python-version: '3.11'  # Versão mais recente e estável
           cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
+      - name: 📦 Verificar cache de dependências
+        id: pip-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: 📦 Instalar dependências
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip wheel setuptools
           pip install -r requirements.txt
-          pip install kaleido imageio
+          pip install kaleido imageio tqdm colorama
+        
+      - name: 📁 Criar diretórios necessários
+        run: |
+          mkdir -p images
+          mkdir -p logs
 
-      - name: 🔑 Configurar Token do GitHub e variáveis não-interativas
+      - name: 🔑 Configurar Token do GitHub e variáveis
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          # Garantir que o token seja passado corretamente
           echo "GITHUB_TOKEN=$GH_TOKEN" >> $GITHUB_ENV
-          # Criar diretório de imagens antecipadamente
-          mkdir -p images
+          echo "PYTHONUNBUFFERED=1" >> $GITHUB_ENV  # Para exibir logs em tempo real
+          echo "GENERATE_DATE=$(date +%Y-%m-%d)" >> $GITHUB_ENV
 
-      - name: 🔧 Modificar script para modo não-interativo
+      - name: 🔍 Buscar dados de contribuições
+        id: fetch-data
         run: |
-          # Criar um script temporário que não pede entrada interativa
-          cat > auto_run.py << 'EOF'
-          import os
-          import sys
-          import subprocess
-
-          # Verificar se o token está disponível
-          if not os.getenv("GITHUB_TOKEN"):
-              print("❌ Erro: Token do GitHub não encontrado nas variáveis de ambiente")
-              sys.exit(1)
-              
-          # Verificar se o usuário foi fornecido como argumento
-          if len(sys.argv) != 2:
-              print("❌ Erro: Especifique o nome de usuário como argumento")
-              sys.exit(1)
-              
-          # Modificar os scripts para usar o nome de usuário
-          username = sys.argv[1]
-          
-          for script in ["fetch_contributions.py", "visualize_3d.py", "generate_advanced_3d.py"]:
-              with open(script, "r") as f:
-                  content = f.read()
-              
-              content = content.replace('USERNAME = "ericvasr"', f'USERNAME = "{username}"')
-              
-              with open(script, "w") as f:
-                  f.write(content)
-          
-          # Executar cada script diretamente em sequência
-          print("📊 Buscando dados de contribuições...")
-          subprocess.run([sys.executable, "fetch_contributions.py"], check=True)
-          
-          print("🎨 Gerando visualizações 3D...")
-          subprocess.run([sys.executable, "generate_advanced_3d.py"], check=True)
-          
-          print("📝 Atualizando README...")
-          subprocess.run([sys.executable, "update_readme.py"], check=True)
-          
-          print("✅ Processo concluído com sucesso!")
-          EOF
-          
-          # Tornar o script executável
-          chmod +x auto_run.py
-        
-      - name: 🧮 Gerar visualização 3D (modo não-interativo)
-        run: |
-          python auto_run.py ericvasr
-
-      - name: 📸 Verificar arquivos gerados
-        run: |
-          # Usar uma condição para evitar falha se o diretório não existir
-          if [ -d "images" ]; then
-            ls -la images/
-            echo "Conteúdo do diretório images:"
-            find images -type f | sort
+          echo "📊 Iniciando busca de dados de contribuições..."
+          python fetch_contributions.py 2>&1 | tee logs/fetch_data.log
+          # Verificar se os arquivos esperados foram gerados
+          if [ -f "contrib_data.csv" ] && [ -f "github_user_data.json" ]; then
+            echo "status=success" >> $GITHUB_OUTPUT
           else
-            echo "❌ Diretório 'images/' não foi criado"
-            mkdir -p images  # Criar para evitar falha no próximo passo
+            echo "status=failed" >> $GITHUB_OUTPUT
+            exit 1
           fi
 
-      - name: 🔄 Corrigir caminhos no README
+      - name: 🎨 Gerar visualização 3D premium
+        id: generate-viz
+        if: steps.fetch-data.outputs.status == 'success'
         run: |
-          # Atualizar caminhos das imagens para URLs absolutas
-          sed -i 's|![Painel 3D](images/github_3d_beonsafe.gif)|![Painel 3D](https://raw.githubusercontent.com/ericvasr/ericvasr/main/images/github_3d_beonsafe.gif)|g' README.md
-          sed -i 's|\[📊 Versão Interativa\](images/github_3d_beonsafe.html)|\[📊 Versão Interativa\](https://htmlpreview.github.io/?https://github.com/ericvasr/ericvasr/blob/main/images/github_3d_beonsafe.html)|g' README.md
-          sed -i 's|\[documentação completa\](./README_GIT3D.md)|\[documentação completa\](https://github.com/ericvasr/ericvasr/blob/main/README_GIT3D.md)|g' README.md
-          
-          # Exibir o conteúdo do README após as alterações
-          echo "Conteúdo atualizado do README.md:"
-          grep -A 2 "![Painel 3D]" README.md || true
+          echo "🔷 Gerando visualização 3D premium..."
+          python generate_advanced_3d.py 2>&1 | tee logs/visualization.log
+          # Verificar se as imagens foram geradas
+          find images -type f | sort
+          if [ -f "images/github_3d_beonsafe.html" ] && [ -f "images/github_3d_beonsafe.gif" ]; then
+            echo "status=success" >> $GITHUB_OUTPUT
+          else
+            echo "status=failed" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
-      - name: 💾 Garantir que todos os arquivos sejam adicionados
+      - name: 📝 Atualizar README
+        id: update-readme
+        if: steps.generate-viz.outputs.status == 'success'
         run: |
-          # Exibir status do git
-          git status
+          echo "📄 Atualizando README com visualização 3D premium..."
+          python update_readme.py 2>&1 | tee logs/update_readme.log
+
+      - name: 📊 Verificar e otimizar arquivos gerados
+        run: |
+          # Otimizar GIFs e PNGs (opcional)
+          if command -v optipng &> /dev/null && [ -f "images/github_3d_beonsafe.png" ]; then
+            echo "🔧 Otimizando PNG..."
+            optipng -o2 images/github_3d_beonsafe.png
+          fi
           
-          # Adicionar todos os arquivos
-          git add README.md || true
-          git add images/ || true
-          git add *.csv || true
-          git add *.html || true
+          # Exibir resumo dos arquivos gerados
+          echo "📂 Arquivos gerados:"
+          du -h images/* | sort -h
           
-          # Verificar se há mudanças para commit
+          # Verificar se há erros nos logs
+          if grep -i "error\|exception\|fail" logs/*.log; then
+            echo "⚠️ Detectados possíveis erros nos logs (verificação informativa apenas)"
+          fi
+
+      - name: 💾 Commit e Push das alterações
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Configurar Git
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          
+          # Adicionar alterações
+          git add README.md images/ *.csv *.json || true
+          
+          # Verificar se há mudanças
           if git status --porcelain | grep -q .; then
-            echo "Mudanças detectadas, preparando commit"
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git commit -m "🔷 Atualização da visualização 3D de contribuições - BeOnSafe [$(date +%Y-%m-%d)]"
-            git push
-            echo "✅ Commit e push realizados com sucesso!"
+            echo "🔄 Alterações detectadas, realizando commit..."
+            git commit -m "🔷 Atualização Premium de Visualização 3D - BeOnSafe [$GENERATE_DATE]"
+            
+            # Push com retry em caso de falha
+            MAX_RETRIES=3
+            RETRY_COUNT=0
+            
+            while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+              if git push; then
+                echo "✅ Push realizado com sucesso!"
+                break
+              else
+                RETRY_COUNT=$((RETRY_COUNT+1))
+                echo "⚠️ Falha no push, tentativa $RETRY_COUNT de $MAX_RETRIES..."
+                git pull --rebase
+                sleep 5
+              fi
+            done
+            
+            if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
+              echo "❌ Falha ao realizar push após $MAX_RETRIES tentativas"
+              exit 1
+            fi
           else
-            echo "Nenhuma alteração detectada para commit"
+            echo "✅ Nenhuma alteração detectada para commit"
           fi
-        continue-on-error: true 
+
+      - name: 📤 Upload de logs como artefato
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: git3d-logs-${{ env.GENERATE_DATE }}
+          path: logs/
+          retention-days: 7 

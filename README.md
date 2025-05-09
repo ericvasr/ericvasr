@@ -1,41 +1,68 @@
-# 👋 Eric Ribeiro – Full Stack & IA Developer
+# 🔷 Git3D Premium - Visualização 3D Avançada de Contribuições GitHub
 
-Sou o fundador da **BeOnSafe**, atuo com IA, automações e desenvolvimento de sistemas escaláveis com foco em performance e integração de dados.
+<div align="center">
+  <img src="https://github.com/ericvasr/git3d/raw/main/images/preview.gif" alt="Git3D Preview" width="70%">
+  <p><em>Visualização 3D Premium de Contribuições do GitHub - BeOnSafe</em></p>
+</div>
 
-## 🔷 Painel 3D de Contribuições – Powered by BeOnSafe
+## 📋 Sobre o Projeto
 
-> Visualize minha dedicação e ritmo de contribuição de forma interativa e moderna.
+Git3D Premium é uma solução avançada para criar visualizações tridimensionais interativas e de alta qualidade das suas contribuições no GitHub. Transforme seu histórico de contribuições em uma representação visual profissional impressionante.
 
-![Painel 3D](https://camo.githubusercontent.com/c690d12894108f3deeb6b6123086373726133877ce7c9c0a73fe61961ced5d25/68747470733a2f2f706c61636577697a2e636f6d2f696d672f736c6964657273686f772f736c696465732f6769745f7669736832322e676966)
+### ✨ Recursos Premium
 
-[📊 Versão Interativa](https://htmlpreview.github.io/?https://github.com/ericvasr/ericvasr/blob/main/images/github_3d_beonsafe.html) _(Atualizado em 15/05/2024)_
+- **Visualização 3D Profissional** com efeitos de iluminação e profundidade
+- **Animações Fluidas** com controles interativos
+- **Análise Estatística Detalhada** dos seus padrões de contribuição
+- **Integração com GitHub Actions** para atualização automática
+- **Design Responsivo** otimizado para compartilhamento
 
----
+## 🚀 Começando
 
-## 📋 Sobre o Git3D
+### Pré-requisitos
 
-Git3D é uma ferramenta desenvolvida pela BeOnSafe que cria visualizações 3D interativas e impressionantes das contribuições no GitHub. Ideal para:
+- Python 3.11 ou superior
+- Token de acesso pessoal do GitHub
+- Git instalado
 
-- Incluir no seu perfil do GitHub
-- Exibir em seu portfólio profissional
-- Compartilhar em redes sociais
-- Analisar seus padrões de contribuição
-
-## 🚀 Como Usar
-
-Execute o script principal e siga as instruções:
+### Instalação Rápida
 
 ```bash
-python run_git3d.py [seu_usuario_github]
+# Clone o repositório
+git clone https://github.com/ericvasr/git3d.git
+cd git3d
+
+# Instale as dependências
+pip install -r requirements.txt
+
+# Execute o script principal
+python run_git3d.py
 ```
 
-Para mais detalhes, consulte a [documentação completa](https://github.com/ericvasr/ericvasr/blob/main/README_GIT3D.md).
+## 📊 Exemplo de Resultado
+
+<div align="center">
+  <img src="https://github.com/ericvasr/git3d/raw/main/images/example.png" alt="Exemplo de Visualização" width="80%">
+</div>
+
+## 📖 Documentação
+
+Consulte [README_GIT3D.md](README_GIT3D.md) para documentação completa, incluindo:
+- Guia detalhado de instalação
+- Opções de personalização
+- Descrição técnica da arquitetura
+- Exemplos avançados de uso
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Consulte [CONTRIBUTING.md](CONTRIBUTING.md) para diretrizes de contribuição.
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
 ---
 
-🔗 Projeto BeOnSafe: https://github.com/ericvasr  
-📬 eric@beonsafe.com.br
-
----
-
-Desenvolvido com 💙 pela BeOnSafe
+<div align="center">
+  <p><strong>Powered by <a href="https://beonsafe.com.br">BeOnSafe</a></strong> | Visualização Premium de Contribuições GitHub</p>
+</div>
