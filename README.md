@@ -1,5 +1,56 @@
 # 👋 Eric Ribeiro – Full Stack & IA Developer
 
+## 🔷 Painel 3D Premium de Contribuições – BeOnSafe
+
+<div align="center">
+
+### 📊 Visualização Avançada de Atividade no GitHub
+
+[![Contribuições](https://img.shields.io/badge/Contribuições-136-0066cc?style=for-the-badge&logo=github)](https://github.com/ericvasr)
+[![Sequência Atual](https://img.shields.io/badge/Sequência-0%20dias-00cc66?style=for-the-badge&logo=firebase)](https://github.com/ericvasr)
+[![Pull Requests](https://img.shields.io/badge/Pull%20Requests-0-ff6600?style=for-the-badge&logo=git)](https://github.com/ericvasr?tab=repositories)
+[![Issues](https://img.shields.io/badge/Issues-0-ffcc00?style=for-the-badge&logo=jira)](https://github.com/ericvasr?tab=repositories)
+
+</div>
+
+<table>
+  <tr>
+    <td width="60%">
+      <img src="images/github_3d_beonsafe.gif" alt="Visualização 3D de Contribuições" width="100%" />
+      <p align="center"><em>🔄 Visualização 3D Interativa das Contribuições</em></p>
+    </td>
+    <td width="40%">
+      <h4>📈 Métricas de Desempenho</h4>
+      <ul>
+        <li><b>Total de Contribuições:</b> 136</li>
+        <li><b>Média Diária:</b> 0.4</li>
+        <li><b>Dias Ativos:</b> 32 (8.7%)</li>
+        <li><b>Sequência Atual:</b> 0 dias</li>
+        <li><b>Sequência Máxima:</b> 4 dias</li>
+        <li><b>Dia Mais Produtivo:</b> Sunday</li>
+        <li><b>Score de Intensidade:</b> 25.0%</li>
+      </ul>
+
+      <h4>🌟 Principais Repositórios</h4>
+      <ul>
+        <li>beonsafe-landing</li>
+        <li>Whatsaapi</li>
+        <li>portal_imoveis</li>
+      </ul>
+
+      <p><a href="images/github_3d_beonsafe.html">📊 Versão Interativa</a> _(Atualizado em 09/05/2025)_</p>
+      <p><a href="https://github.com/ericvasr/git3d">⚙️ Código Fonte</a> | <a href="./README_GIT3D.md">📖 Documentação</a></p>
+    </td>
+  </tr>
+</table>
+
+<div align="center">
+  <p><strong>Powered by <a href="https://beonsafe.com.br">BeOnSafe</a></strong> | Visualização Premium de Contribuições do GitHub</p>
+</div>
+
+---
+
+
 Sou o fundador da **BeOnSafe**, atuo com IA, automações e desenvolvimento de sistemas escaláveis com foco em performance e integração de dados.
 
 ## 🔷 Painel 3D Premium de Contribuições – BeOnSafe
