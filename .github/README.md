@@ -63,6 +63,24 @@ Olá! Sou Eric Ribeiro, desenvolvedor de software e especialista em automação 
 
 Acredito no poder do código aberto para melhorar a indústria de software. Minhas contribuições incluem workflows para N8N, ferramentas de automação e frameworks para desenvolvimento de agentes de IA.
 
+
+## 📈 Atividade Recente
+
+> Atualizado em: 10/05/2025
+
+- **Contribuições no último ano:** 8
+- **Média diária:** 0.02 contribuições
+- **Dia mais produtivo:** 10/05/2025 com 4 contribuições
+- **Imagens de tecnologia geradas:** 5 
+
+### 🤖 Temas Tecnológicos Recentes
+
+- **Blockchain** - 10/05/2025 12:45:06
+- **Computação Quântica** - 10/05/2025 12:45:06
+- **API Gateway** - 10/05/2025 12:45:07
+- **Inteligência Artificial** - 10/05/2025 12:45:07
+- **Serverless** - 10/05/2025 12:45:07
+
 ---
 
 <div align="center">
