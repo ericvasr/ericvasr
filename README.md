@@ -40,26 +40,6 @@ Todos os componentes são desenvolvidos com segurança como prioridade:
 3. Instale as dependências: `pip install -r requirements.txt`
 4. Execute o script principal: `python src/main.py`
 
-## 📊 Módulos Principais
-
-| Módulo | Descrição |
-|--------|-----------|
-| **Agent Core** | Implementação dos agentes inteligentes |
-| **API Gateway** | Interface para integração com sistemas externos |
-| **Image Generator** | Gerador de imagens para conteúdo dinâmico |
-| **GitHub Profile** | Integração com GitHub para metadados e contribuições |
-
-## 📈 Roadmap
-
-- [ ] Interface administrativa para monitoramento
-- [ ] Suporte a webhooks personalizados
-- [ ] Novas integrações com plataformas de IA
-- [ ] Sistema de templates para agentes
-
-## 👥 Equipe
-
-Desenvolvido por Eric Ribeiro, especialista em automação e inteligência artificial.
-
 ## 📬 Contato
 
 - **Email**: eric@beonsafe.com.br
