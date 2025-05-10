@@ -1,200 +1,492 @@
-name: 🔷 Atualizar Visualização 3D Premium de Contribuições - BeOnSafe
+name: GitHub Contribution Visualization
 
 on:
+  # Executa diariamente à meia-noite
   schedule:
-    - cron: "0 3 * * *"  # Executa todos os dias às 3h UTC (otimizado para menor carga)
-  workflow_dispatch:      # Permite execução manual
-
-# Configuração de permissões - importante para segurança
-permissions:
-  contents: write        # Para fazer commit e push
-  actions: read          # Para ler o status das ações
-  packages: read         # Para ler pacotes
+    - cron: '0 0 * * *'
+  
+  # Permite execução manual através da interface do GitHub
+  workflow_dispatch:
+  
+  # Executa quando um push é feito para a branch main
+  push:
+    branches:
+      - main
 
 jobs:
-  generate-3d-visualization:
-    name: Gerar Visualização 3D Premium
+  generate-contribution-data:
+    name: Gerar dados de contribuição
     runs-on: ubuntu-latest
-    timeout-minutes: 15  # Limite de tempo para evitar execuções travadas
     
     steps:
-      - name: 🔄 Checkout do repositório
-        uses: actions/checkout@v4  # Versão mais recente
+      - name: Checkout do repositório
+        uses: actions/checkout@v3
+      
+      - name: Configurar Python
+        uses: actions/setup-python@v4
         with:
-          fetch-depth: 0
-          persist-credentials: true
-
-      - name: 🐍 Configurar Python
-        uses: actions/setup-python@v5  # Versão mais recente
-        with:
-          python-version: '3.11'  # Versão mais recente e estável
+          python-version: '3.10'
           cache: 'pip'
-          cache-dependency-path: 'requirements.txt'
-
-      - name: 📦 Verificar cache de dependências
-        id: pip-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: 📦 Instalar dependências
+      
+      - name: Instalar dependências
         run: |
-          python -m pip install --upgrade pip wheel setuptools
-          pip install -r requirements.txt
-          pip install kaleido imageio tqdm colorama matplotlib plotly python-dotenv
-        
-      - name: 📁 Criar diretórios necessários
+          python -m pip install --upgrade pip
+          pip install pandas matplotlib plotly requests pillow
+          
+      - name: Configurar ambiente
         run: |
+          mkdir -p data
           mkdir -p images
-          mkdir -p logs
-          mkdir -p .cache
-
-      - name: 🔑 Configurar Token do GitHub e variáveis
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      
+      - name: Coletar dados de contribuição
         run: |
-          # Exportar token para variável de ambiente
-          echo "GITHUB_TOKEN=${GH_TOKEN}" >> $GITHUB_ENV
-          echo "GH_TOKEN=${GH_TOKEN}" >> $GITHUB_ENV
-          echo "PYTHONUNBUFFERED=1" >> $GITHUB_ENV  # Para exibir logs em tempo real
-          DATE_NOW=$(date +%Y-%m-%d)
-          echo "GENERATE_DATE=${DATE_NOW}" >> $GITHUB_ENV
-          echo "USERNAME=ericvasr" >> $GITHUB_ENV
-          echo "COMPANY_NAME=BeOnSafe" >> $GITHUB_ENV
-
-      - name: 🔍 Buscar dados de contribuições
-        id: fetch-data
-        run: |
-          echo "📊 Iniciando busca de dados de contribuições..."
-          # Certificar-se de que o nome de usuário correto é usado
-          sed -i 's/USERNAME = "[^"]*"/USERNAME = "ericvasr"/' fetch_contributions.py
-          # Criar arquivo .env temporário para processo local
-          echo "GH_TOKEN=${GH_TOKEN}" > .env
-          echo "GITHUB_TOKEN=${GH_TOKEN}" >> .env
-          echo "USERNAME=ericvasr" >> .env
-          echo "COMPANY_NAME=BeOnSafe" >> .env
-          echo "GIT3D_CACHE_ENABLED=true" >> .env
-          echo "GIT3D_CACHE_DURATION=86400" >> .env
-          # Executar script com logs
-          python fetch_contributions.py 2>&1 | tee logs/fetch_data.log
-          # Verificar se os arquivos esperados foram gerados
-          if [ -f "contrib_data.csv" ] && [ -f "github_user_data.json" ]; then
-            echo "status=success" >> $GITHUB_OUTPUT
-          else
-            echo "status=failed" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-
-      - name: 🎨 Gerar visualização 3D premium
-        id: generate-viz
-        if: steps.fetch-data.outputs.status == 'success'
-        run: |
-          echo "🔷 Gerando visualização 3D premium..."
-          # Certificar-se de que o nome de usuário correto é usado
-          sed -i 's/USERNAME = "[^"]*"/USERNAME = "ericvasr"/' generate_advanced_3d.py
-          python generate_advanced_3d.py 2>&1 | tee logs/visualization.log
-          # Verificar se as imagens foram geradas
-          find images -type f | sort
-          if [ -f "images/github_3d_beonsafe.html" ] && [ -f "images/github_3d_beonsafe.gif" ]; then
-            echo "status=success" >> $GITHUB_OUTPUT
-          else
-            echo "status=failed" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-
-      - name: 📝 Atualizar README
-        id: update-readme
-        if: steps.generate-viz.outputs.status == 'success'
-        run: |
-          echo "📄 Atualizando README com visualização 3D premium..."
-          # Certificar-se de que o nome de usuário correto é usado
-          sed -i 's/USERNAME = "[^"]*"/USERNAME = "ericvasr"/' update_readme.py
-          python update_readme.py 2>&1 | tee logs/update_readme.log
-
-      - name: 🔄 Corrigir caminhos no README
-        run: |
-          # Atualizar caminhos das imagens para URLs absolutas
-          sed -i 's|![Painel 3D](images/github_3d_beonsafe.gif)|![Painel 3D](https://raw.githubusercontent.com/ericvasr/ericvasr/main/images/github_3d_beonsafe.gif)|g' README.md
-          sed -i 's|\[📊 Versão Interativa\](images/github_3d_beonsafe.html)|\[📊 Versão Interativa\](https://htmlpreview.github.io/?https://github.com/ericvasr/ericvasr/blob/main/images/github_3d_beonsafe.html)|g' README.md
-          sed -i 's|\[documentação completa\](./README_GIT3D.md)|\[documentação completa\](https://github.com/ericvasr/ericvasr/blob/main/README_GIT3D.md)|g' README.md
-
-      - name: 📊 Verificar e otimizar arquivos gerados
-        run: |
-          # Otimizar GIFs e PNGs (opcional)
-          if command -v optipng &> /dev/null && [ -f "images/github_3d_beonsafe.png" ]; then
-            echo "🔧 Otimizando PNG..."
-            optipng -o2 images/github_3d_beonsafe.png
-          fi
+          echo "Coletando dados de contribuição do GitHub..."
+          python - <<EOF
+          import requests
+          import pandas as pd
+          import json
+          import os
+          from datetime import datetime, timedelta
           
-          # Exibir resumo dos arquivos gerados
-          echo "📂 Arquivos gerados:"
-          du -h images/* | sort -h
+          # Configurações
+          USERNAME = "ericvasr"
+          TOKEN = "${{ secrets.GH_TOKEN }}"
           
-          # Verificar se há erros nos logs
-          if grep -i "error\|exception\|fail" logs/*.log; then
-            echo "⚠️ Detectados possíveis erros nos logs (verificação informativa apenas)"
-          fi
-
-      - name: 🔒 Limpar arquivos sensíveis
+          # Cabeçalhos para a API do GitHub
+          headers = {}
+          if TOKEN:
+              headers["Authorization"] = f"token {TOKEN}"
+          
+          # Função para obter contribuições
+          def get_contributions():
+              today = datetime.now()
+              one_year_ago = today - timedelta(days=365)
+              
+              query = """
+              query {
+                user(login: "%s") {
+                  contributionsCollection(from: "%s", to: "%s") {
+                    contributionCalendar {
+                      weeks {
+                        contributionDays {
+                          date
+                          contributionCount
+                          weekday
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              """ % (USERNAME, one_year_ago.strftime("%Y-%m-%dT00:00:00Z"), today.strftime("%Y-%m-%dT00:00:00Z"))
+              
+              # Faz a requisição
+              response = requests.post(
+                  "https://api.github.com/graphql",
+                  json={"query": query},
+                  headers=headers
+              )
+              
+              if response.status_code != 200:
+                  print(f"Erro ao obter contribuições: {response.status_code}")
+                  print(response.text)
+                  return []
+              
+              # Processa os dados
+              data = response.json()
+              contributions = []
+              
+              weeks = data.get("data", {}).get("user", {}).get("contributionsCollection", {}).get("contributionCalendar", {}).get("weeks", [])
+              
+              for week in weeks:
+                  days = week.get("contributionDays", [])
+                  for day in days:
+                      contributions.append({
+                          "date": day.get("date"),
+                          "contributionCount": day.get("contributionCount"),
+                          "weekday": day.get("weekday")
+                      })
+              
+              return contributions
+          
+          # Obtém os dados
+          contributions = get_contributions()
+          
+          # Converte para DataFrame
+          df = pd.DataFrame(contributions)
+          
+          # Salva como CSV
+          df.to_csv("data/contrib_data.csv", index=False)
+          
+          print(f"Coletados dados de {len(df)} dias com um total de {df['contributionCount'].sum()} contribuições")
+          EOF
+      
+      - name: Gerar imagens de tecnologia
         run: |
-          # Remover arquivos .env temporários e outros dados sensíveis
-          if [ -f ".env" ]; then
-            rm .env
-          fi
+          echo "Gerando imagens sobre tecnologia, desenvolvimento e IA..."
+          python - <<EOF
+          import os
+          import random
+          from PIL import Image, ImageDraw, ImageFont, ImageFilter
+          from datetime import datetime
+          import json
+          import math
           
-          # Garantir que os arquivos de log não contêm informações sensíveis
-          if [ -d "logs" ]; then
-            find logs -type f -name "*.log" -exec sed -i 's/ghp_[0-9a-zA-Z]\{36\}/***REDACTED***/g' {} \;
-          fi
-
-      - name: 💾 Commit e Push das alterações
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          # Garante que o diretório existe
+          os.makedirs("images", exist_ok=True)
+          
+          # Temas de tecnologia
+          tech_themes = [
+              "Inteligência Artificial",
+              "Machine Learning",
+              "Deep Learning",
+              "Automação de Processos",
+              "Blockchain",
+              "Edge Computing",
+              "Computação Quântica",
+              "DevOps",
+              "Microserviços",
+              "API Gateway",
+              "Cybersegurança",
+              "Cloud Computing",
+              "Análise de Dados",
+              "Big Data",
+              "IoT",
+              "Realidade Aumentada",
+              "NLP",
+              "Agentes Inteligentes",
+              "N8N Workflow",
+              "AutoML",
+              "CI/CD",
+              "Infraestrutura como Código",
+              "Serverless",
+              "Kubernetes",
+              "Docker"
+          ]
+          
+          # Paletas de cores modernas para tecnologia
+          tech_palettes = [
+              [(33, 87, 50), (76, 175, 80), (129, 199, 132), (220, 237, 200)],  # Verde Pantone
+              [(45, 45, 45), (75, 75, 75), (120, 120, 120), (220, 220, 220)],   # Cinza
+              [(30, 87, 50), (45, 45, 45), (76, 175, 80), (120, 120, 120)],     # Verde e Cinza
+              [(20, 60, 40), (33, 87, 50), (50, 110, 60), (76, 175, 80)],       # Verde escuro a claro
+              [(45, 45, 45), (65, 65, 65), (85, 85, 85), (120, 120, 120)]       # Cinza escuro a claro
+          ]
+          
+          def gerar_imagem_tech(filename, width=1200, height=630, tema=None):
+              """Gera uma imagem com visual tecnológico e moderno"""
+              if tema is None:
+                  tema = random.choice(tech_themes)
+              
+              # Seleciona uma paleta de cores
+              palette = random.choice(tech_palettes)
+              bg_color = palette[0]  # Cor mais escura para o fundo
+              
+              # Cria a imagem base
+              img = Image.new('RGB', (width, height), color=bg_color)
+              draw = ImageDraw.Draw(img)
+              
+              # Desenha padrão de fundo (grade ou conexões)
+              pattern_type = random.choice(['grid', 'nodes', 'circuit', 'wave'])
+              
+              if pattern_type == 'grid':
+                  # Grade de linhas
+                  line_color = palette[1]
+                  line_spacing = random.randint(20, 50)
+                  line_opacity = 60  # Semi-transparente
+                  
+                  # Linhas horizontais
+                  for y in range(0, height, line_spacing):
+                      draw.line([(0, y), (width, y)], fill=line_color + (line_opacity,), width=1)
+                  
+                  # Linhas verticais
+                  for x in range(0, width, line_spacing):
+                      draw.line([(x, 0), (x, height)], fill=line_color + (line_opacity,), width=1)
+              
+              elif pattern_type == 'nodes':
+                  # Pontos conectados (como rede neural)
+                  num_nodes = random.randint(15, 30)
+                  nodes = []
+                  
+                  # Cria pontos
+                  for _ in range(num_nodes):
+                      x = random.randint(50, width-50)
+                      y = random.randint(50, height-50)
+                      nodes.append((x, y))
+                  
+                  # Conecta alguns pontos
+                  connections = random.randint(num_nodes, num_nodes*2)
+                  for _ in range(connections):
+                      node1 = random.choice(nodes)
+                      node2 = random.choice(nodes)
+                      if node1 != node2:
+                          # Calcula distância para ajustar cor/espessura
+                          dist = math.sqrt((node1[0]-node2[0])**2 + (node1[1]-node2[1])**2)
+                          opacity = max(30, int(255 - dist/5))
+                          line_color = palette[2] + (opacity,)
+                          draw.line([node1, node2], fill=line_color, width=1)
+                  
+                  # Desenha os nós
+                  for node in nodes:
+                      draw.ellipse([node[0]-5, node[1]-5, node[0]+5, node[1]+5], 
+                                  fill=palette[3])
+              
+              elif pattern_type == 'circuit':
+                  # Padrão de circuito
+                  for _ in range(20):
+                      start_x = random.choice([0, width])
+                      start_y = random.randint(0, height)
+                      
+                      current_x, current_y = start_x, start_y
+                      segments = random.randint(3, 8)
+                      
+                      for s in range(segments):
+                          direction = random.choice(['h', 'v'])
+                          length = random.randint(30, 200)
+                          
+                          if direction == 'h':
+                              end_x = min(max(0, current_x + (length if random.random() > 0.5 else -length)), width)
+                              end_y = current_y
+                          else:
+                              end_x = current_x
+                              end_y = min(max(0, current_y + (length if random.random() > 0.5 else -length)), height)
+                          
+                          draw.line([(current_x, current_y), (end_x, end_y)], 
+                                  fill=palette[1], width=random.randint(1, 3))
+                          
+                          # Às vezes adiciona um nó
+                          if random.random() > 0.7:
+                              draw.ellipse([end_x-4, end_y-4, end_x+4, end_y+4], 
+                                          fill=palette[3])
+                          
+                          current_x, current_y = end_x, end_y
+              
+              else:  # wave
+                  # Ondas de dados
+                  wave_color = palette[2]
+                  num_waves = random.randint(3, 7)
+                  wave_height = height / (num_waves * 2)
+                  
+                  for w in range(num_waves):
+                      y_base = height * (w + 1) / (num_waves + 1)
+                      frequency = random.uniform(0.01, 0.03)
+                      
+                      points = []
+                      for x in range(0, width, 5):
+                          y = y_base + math.sin(x * frequency) * wave_height
+                          points.append((x, y))
+                      
+                      # Desenha a linha da onda
+                      for i in range(1, len(points)):
+                          draw.line([points[i-1], points[i]], fill=wave_color, width=2)
+              
+              # Aplica um leve efeito de blur para suavizar
+              img = img.filter(ImageFilter.GaussianBlur(radius=1))
+              
+              # Adiciona um gradiente transparente sobreposto
+              gradient = Image.new('RGBA', (width, height), (0, 0, 0, 0))
+              gradient_draw = ImageDraw.Draw(gradient)
+              
+              # Desenha gradiente
+              for y in range(height):
+                  opacity = int(100 * (1 - y / height))
+                  gradient_draw.line([(0, y), (width, y)], fill=palette[2] + (opacity,))
+              
+              # Converte de volta para RGB para poder mesclar
+              gradient_rgb = gradient.convert('RGB')
+              img = Image.blend(img, gradient_rgb, alpha=0.2)
+              
+              # Adiciona o título do tema
+              try:
+                  # Tenta carregar uma fonte moderna (se não tiver, usa o padrão)
+                  font_size = width // 20
+                  title_font = ImageFont.truetype("arial.ttf", font_size)
+                  subtitle_font = ImageFont.truetype("arial.ttf", font_size // 2)
+              except:
+                  title_font = ImageFont.load_default()
+                  subtitle_font = ImageFont.load_default()
+              
+              # Adiciona uma área semi-transparente para o texto
+              text_bg_height = height // 3
+              text_bg = Image.new('RGBA', (width, text_bg_height), palette[0] + (180,))
+              img.paste(Image.blend(img.crop((0, height-text_bg_height, width, height)), 
+                                  text_bg.convert('RGB'), 0.8), 
+                       (0, height-text_bg_height))
+              
+              # Adiciona texto
+              title_color = (255, 255, 255)
+              timestamp = datetime.now().strftime("%d/%m/%Y")
+              
+              # Mede o texto para centralizar
+              try:
+                  title_bbox = draw.textbbox((0, 0), tema, font=title_font)
+                  title_width = title_bbox[2] - title_bbox[0]
+                  subtitle_bbox = draw.textbbox((0, 0), f"Gerado em: {timestamp}", font=subtitle_font)
+                  subtitle_width = subtitle_bbox[2] - subtitle_bbox[0]
+              except:
+                  title_width = len(tema) * font_size // 2
+                  subtitle_width = len(f"Gerado em: {timestamp}") * font_size // 4
+              
+              # Posição do texto
+              title_x = (width - title_width) // 2
+              title_y = height - text_bg_height // 2 - font_size // 2
+              subtitle_x = (width - subtitle_width) // 2
+              subtitle_y = title_y + font_size + 10
+              
+              # Desenha textos
+              draw.text((title_x, title_y), tema, fill=title_color, font=title_font)
+              draw.text((subtitle_x, subtitle_y), f"Gerado em: {timestamp}", 
+                        fill=(200, 200, 200), font=subtitle_font)
+              
+              # Adiciona um logo ou marca d'água da BeOnSafe
+              logo_text = "BeOnSafe"
+              logo_color = (255, 255, 255, 128)  # Semi-transparente
+              
+              try:
+                  logo_font = ImageFont.truetype("arial.ttf", font_size // 3)
+                  logo_bbox = draw.textbbox((0, 0), logo_text, font=logo_font)
+                  logo_width = logo_bbox[2] - logo_bbox[0]
+              except:
+                  logo_font = ImageFont.load_default()
+                  logo_width = len(logo_text) * font_size // 6
+              
+              draw.text((width - logo_width - 20, 20), logo_text, 
+                       fill=logo_color, font=logo_font)
+              
+              # Salva a imagem
+              img.save(f"images/{filename}")
+              return f"images/{filename}"
+          
+          # Gera algumas imagens
+          images = []
+          for i in range(5):
+              tema = random.choice(tech_themes)
+              
+              # Gera um nome de arquivo único
+              filename = f"tech_{i+1}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+              img_path = gerar_imagem_tech(filename, tema=tema)
+              
+              images.append({
+                  "path": img_path,
+                  "tema": tema,
+                  "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+              })
+          
+          # Salva informações sobre as imagens
+          with open("images/tech_images.json", "w") as f:
+              json.dump(images, f, indent=2)
+              
+          print(f"Geradas {len(images)} imagens de tecnologia para demonstração")
+          EOF
+      
+      - name: Atualizar README
         run: |
-          # Configurar Git
-          git config user.name "GitHub Actions Bot"
-          git config user.email "actions@github.com"
+          echo "Atualizando README com informações de contribuição..."
+          python - <<EOF
+          import pandas as pd
+          from datetime import datetime
+          import os
+          import json
+          import random
           
-          # Adicionar alterações
-          git add README.md images/ *.csv *.json || true
+          # Carrega dados
+          df = pd.read_csv("data/contrib_data.csv")
+          df['date'] = pd.to_datetime(df['date'])
           
-          # Verificar se há mudanças
-          if git status --porcelain | grep -q .; then
-            echo "🔄 Alterações detectadas, realizando commit..."
-            CURRENT_DATE=$(date +%Y-%m-%d)
-            git commit -m "🔷 Atualização Premium de Visualização 3D - BeOnSafe [${CURRENT_DATE}]"
-            
-            # Push com retry em caso de falha
-            MAX_RETRIES=3
-            RETRY_COUNT=0
-            
-            while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-              if git push origin main; then
-                echo "✅ Push realizado com sucesso!"
-                break
-              else
-                RETRY_COUNT=$((RETRY_COUNT+1))
-                echo "⚠️ Falha no push, tentativa $RETRY_COUNT de $MAX_RETRIES..."
-                git pull --rebase origin main
-                sleep 5
-              fi
-            done
-            
-            if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
-              echo "❌ Falha ao realizar push após $MAX_RETRIES tentativas"
-              exit 1
-            fi
-          else
-            echo "✅ Nenhuma alteração detectada para commit"
-          fi
-
-      - name: 📤 Upload de logs como artefato
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: git3d-logs-${{ github.run_id }}
-          path: logs/
-          retention-days: 7 
+          # Calcula estatísticas
+          total_contrib = df['contributionCount'].sum()
+          avg_daily = df['contributionCount'].mean()
+          max_contrib = df['contributionCount'].max()
+          max_day = df.loc[df['contributionCount'] == max_contrib, 'date'].values[0]
+          
+          # Carrega informações das imagens se existirem
+          tech_images = []
+          if os.path.exists("images/tech_images.json"):
+              with open("images/tech_images.json", "r") as f:
+                  tech_images = json.load(f)
+          
+          # Lista todas as imagens no diretório
+          all_images = []
+          if os.path.exists("images"):
+              all_images = [f for f in os.listdir("images") if f.endswith(('.png', '.jpg', '.jpeg'))]
+          
+          # Atualiza README
+          with open(".github/README.md", "r") as f:
+              readme = f.read()
+          
+          # Adiciona seção de estatísticas atualizadas
+          contrib_section = f"""
+          ## 📈 Atividade Recente
+          
+          > Atualizado em: {datetime.now().strftime('%d/%m/%Y')}
+          
+          - **Contribuições no último ano:** {total_contrib}
+          - **Média diária:** {avg_daily:.2f} contribuições
+          - **Dia mais produtivo:** {pd.to_datetime(max_day).strftime('%d/%m/%Y')} com {max_contrib} contribuições
+          - **Imagens de tecnologia geradas:** {len(all_images)} 
+          
+          ### 🤖 Últimos Temas de Tecnologia
+          
+          <div align="center">
+          
+          """
+          
+          # Adiciona as imagens mais recentes ao README (até 3 imagens)
+          displayed_images = min(3, len(tech_images))
+          for i in range(displayed_images):
+              img = tech_images[i]
+              img_path = img['path'].replace('images/', '')
+              tema = img['tema']
+              data = img['data']
+              
+              # Cria os URLs relativos para as imagens
+              img_url = f"https://raw.githubusercontent.com/ericvasr/ericvasr/main/images/{img_path}"
+              
+              # Adiciona a imagem ao README com legenda
+              contrib_section += f"""
+          <div style="display: inline-block; margin: 10px; width: 30%;">
+            <img src="{img_url}" alt="{tema}" width="100%" style="border-radius: 10px;">
+            <p><strong>{tema}</strong><br>{data}</p>
+          </div>
+          """
+          
+          # Fecha a div de centralização
+          contrib_section += """
+          </div>
+          
+          #### Temas Recentes
+          
+          """
+          
+          # Adiciona lista de temas recentes (até 5)
+          for i, img in enumerate(tech_images[:5]):
+              contrib_section += f"- **{img['tema']}** - {img['data']}\n"
+              
+          # Procura por uma seção existente para substituir ou adiciona no final
+          if "## 📈 Atividade Recente" in readme:
+              # Substitui a seção existente
+              import re
+              pattern = r"## 📈 Atividade Recente.*?(?=##|\Z)"
+              readme = re.sub(pattern, contrib_section, readme, flags=re.DOTALL)
+          else:
+              # Adiciona antes da última seção
+              pos = readme.rfind("---")
+              if pos > 0:
+                  readme = readme[:pos] + contrib_section + "\n" + readme[pos:]
+              else:
+                  readme += "\n" + contrib_section
+          
+          # Salva o README atualizado
+          with open(".github/README.md", "w") as f:
+              f.write(readme)
+              
+          print("README atualizado com estatísticas de contribuição e imagens de tecnologia")
+          EOF
+      
+      - name: Commit e push das alterações
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add data/ images/ .github/README.md
+          git commit -m "Atualiza dados de contribuição e imagens de tecnologia [Bot]" || echo "Nenhuma alteração para commit"
+          git push 
