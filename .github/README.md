@@ -24,19 +24,6 @@ Olá! Sou Eric Ribeiro, desenvolvedor de software e especialista em automação 
   ![Cloud](https://img.shields.io/badge/-Cloud-424242?style=for-the-badge&logo=googlecloud&logoColor=white)
   ![AI](https://img.shields.io/badge/-AI-4CAF50?style=for-the-badge&logo=openai&logoColor=white)
   ![Linux](https://img.shields.io/badge/-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
-  
-</div>
-
-## 🚀 Projetos em Destaque
-
-<div align="center">
-  <a href="https://github.com/ericvasr/">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=ericvasr&repo=n8n-workflows&theme=dark&title_color=4CAF50&icon_color=4CAF50&bg_color=424242&text_color=ffffff" width="49%" />
-  </a>
-  <a href="https://github.com/ericvasr/">
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=ericvasr&repo=ai-agents&theme=dark&title_color=4CAF50&icon_color=4CAF50&bg_color=424242&text_color=ffffff" width="49%" />
-  </a>
-</div>
 
 ## 📊 Estatísticas GitHub
 
