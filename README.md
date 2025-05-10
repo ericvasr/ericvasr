@@ -1,117 +1,78 @@
-# 👋 Eric Ribeiro – Full Stack & IA Developer
-
-## 🔷 Painel 3D Premium de Contribuições – BeOnSafe
+# BeOnSafe - Plataforma de Automação e IA
 
 <div align="center">
-
-### 📊 Visualização Avançada de Atividade no GitHub
-
-[![Contribuições](https://img.shields.io/badge/Contribuições-136-0066cc?style=for-the-badge&logo=github)](https://github.com/ericvasr)
-[![Sequência Atual](https://img.shields.io/badge/Sequência-0%20dias-00cc66?style=for-the-badge&logo=firebase)](https://github.com/ericvasr)
-[![Pull Requests](https://img.shields.io/badge/Pull%20Requests-0-ff6600?style=for-the-badge&logo=git)](https://github.com/ericvasr?tab=repositories)
-[![Issues](https://img.shields.io/badge/Issues-0-ffcc00?style=for-the-badge&logo=jira)](https://github.com/ericvasr?tab=repositories)
-
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:4CAF50,100:424242&height=180&section=header&text=BeOnSafe&fontSize=60&fontColor=FFFFFF&animation=fadeIn&fontAlignY=38&desc=Automação%20e%20Agentes%20Inteligentes&descAlignY=55&descAlign=50" />
 </div>
 
-<table>
-  <tr>
-    <td width="60%">
-      <img src="images/github_3d_beonsafe.gif" alt="Visualização 3D de Contribuições" width="100%" />
-      <p align="center"><em>🔄 Visualização 3D Interativa das Contribuições</em></p>
-    </td>
-    <td width="40%">
-      <h4>📈 Métricas de Desempenho</h4>
-      <ul>
-        <li><b>Total de Contribuições:</b> 136</li>
-        <li><b>Média Diária:</b> 0.4</li>
-        <li><b>Dias Ativos:</b> 32 (8.7%)</li>
-        <li><b>Sequência Atual:</b> 0 dias</li>
-        <li><b>Sequência Máxima:</b> 4 dias</li>
-        <li><b>Dia Mais Produtivo:</b> Sunday</li>
-        <li><b>Score de Intensidade:</b> 25.0%</li>
-      </ul>
+## 📋 Sobre o Projeto
 
-      <h4>🌟 Principais Repositórios</h4>
-      <ul>
-        <li>beonsafe-landing</li>
-        <li>Whatsaapi</li>
-        <li>portal_imoveis</li>
-      </ul>
+O BeOnSafe é uma plataforma de desenvolvimento de agentes de inteligência artificial e automação com foco em segurança e performance. Utilizamos ferramentas como N8N e modelos avançados de IA para criar soluções personalizadas para diversos setores.
 
-      <p><a href="images/github_3d_beonsafe.html">📊 Versão Interativa</a> _(Atualizado em 09/05/2025)_</p>
-      <p><a href="https://github.com/ericvasr/git3d">⚙️ Código Fonte</a> | <a href="./README_GIT3D.md">📖 Documentação</a></p>
-    </td>
-  </tr>
-</table>
+## 🚀 Principais Recursos
 
-<div align="center">
-  <p><strong>Powered by <a href="https://beonsafe.com.br">BeOnSafe</a></strong> | Visualização Premium de Contribuições do GitHub</p>
-</div>
+- **Agentes de IA** para automação de tarefas complexas
+- **Workflows N8N** para integração entre sistemas
+- **Geração automatizada** de conteúdo e imagens
+- **Análise de dados** em tempo real
+- **Segurança** em todas as camadas da solução
+
+## 💻 Tecnologias
+
+- **Backend**: Python, Node.js, APIs RESTful
+- **Automação**: N8N, GitHub Actions
+- **IA**: Modelos de linguagem natural, visão computacional
+- **Segurança**: Criptografia, autenticação, controle de acesso
+- **DevOps**: Docker, VPS, monitoramento contínuo
+
+## 🔒 Segurança
+
+Todos os componentes são desenvolvidos com segurança como prioridade:
+
+- Criptografia de dados em trânsito e em repouso
+- Autenticação segura com múltiplos fatores
+- Gerenciamento de tokens via variáveis de ambiente e GitHub Secrets
+- Auditorias regulares de segurança
+
+## 🔧 Como Usar
+
+1. Clone este repositório
+2. Configure o arquivo `.env` com suas credenciais (veja `.env.example`)
+3. Instale as dependências: `pip install -r requirements.txt`
+4. Execute o script principal: `python src/main.py`
+
+## 📊 Módulos Principais
+
+| Módulo | Descrição |
+|--------|-----------|
+| **Agent Core** | Implementação dos agentes inteligentes |
+| **API Gateway** | Interface para integração com sistemas externos |
+| **Image Generator** | Gerador de imagens para conteúdo dinâmico |
+| **GitHub Profile** | Integração com GitHub para metadados e contribuições |
+
+## 📈 Roadmap
+
+- [ ] Interface administrativa para monitoramento
+- [ ] Suporte a webhooks personalizados
+- [ ] Novas integrações com plataformas de IA
+- [ ] Sistema de templates para agentes
+
+## 👥 Equipe
+
+Desenvolvido por Eric Ribeiro, especialista em automação e inteligência artificial.
+
+## 📬 Contato
+
+- **Email**: eric@beonsafe.com.br
+- **GitHub**: [@ericvasr](https://github.com/ericvasr)
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
 ---
 
-
-Sou o fundador da **BeOnSafe**, atuo com IA, automações e desenvolvimento de sistemas escaláveis com foco em performance e integração de dados.
-
-## 🔷 Painel 3D Premium de Contribuições – BeOnSafe
-
 <div align="center">
-
-### 📊 Visualização Avançada de Atividade no GitHub
-
-[![Contribuições](https://img.shields.io/badge/Contribuições-1200+-0066cc?style=for-the-badge&logo=github)](https://github.com/ericvasr)
-[![Sequência Atual](https://img.shields.io/badge/Sequência-10%20dias-00cc66?style=for-the-badge&logo=firebase)](https://github.com/ericvasr)
-[![Pull Requests](https://img.shields.io/badge/Pull%20Requests-180+-ff6600?style=for-the-badge&logo=git)](https://github.com/ericvasr?tab=repositories)
-[![Issues](https://img.shields.io/badge/Issues-90+-ffcc00?style=for-the-badge&logo=jira)](https://github.com/ericvasr?tab=repositories)
-
+  Desenvolvido com 💚 pela <b>BeOnSafe</b>
+  <br>
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:424242,100:4CAF50&height=120&section=footer" />
 </div>
-
-<table>
-  <tr>
-    <td width="60%">
-      <img src="https://raw.githubusercontent.com/ericvasr/ericvasr/main/images/github_3d_beonsafe.gif" alt="Visualização 3D de Contribuições" width="100%" />
-      <p align="center"><em>🔄 Visualização 3D Interativa das Contribuições</em></p>
-    </td>
-    <td width="40%">
-      <h4>📈 Métricas de Desempenho</h4>
-      <ul>
-        <li><b>Total de Contribuições:</b> 1200+</li>
-        <li><b>Média Diária:</b> 3.5</li>
-        <li><b>Dias Ativos:</b> 265 (72.6%)</li>
-        <li><b>Sequência Atual:</b> 10 dias</li>
-        <li><b>Sequência Máxima:</b> 30 dias</li>
-        <li><b>Dia Mais Produtivo:</b> Terça</li>
-        <li><b>Score de Intensidade:</b> 65.8%</li>
-      </ul>
-
-      <h4>🌟 Principais Repositórios</h4>
-      <ul>
-        <li>git3d</li>
-        <li>beonsafe-core</li>
-        <li>ai-projects</li>
-      </ul>
-
-      <p><a href="https://htmlpreview.github.io/?https://github.com/ericvasr/ericvasr/blob/main/images/github_3d_beonsafe.html">📊 Versão Interativa</a> _(Atualizado diariamente)_</p>
-      <p><a href="https://github.com/ericvasr/git3d">⚙️ Código Fonte</a> | <a href="https://github.com/ericvasr/git3d/blob/main/README_GIT3D.md">📖 Documentação</a></p>
-    </td>
-  </tr>
-</table>
-
-<div align="center">
-  <p><strong>Powered by <a href="https://beonsafe.com.br">BeOnSafe</a></strong> | Visualização Premium de Contribuições do GitHub</p>
-</div>
-
----
-
-## 🔷 Sobre o Git3D Premium
-
-Git3D Premium é uma solução avançada que desenvolvi para criar visualizações tridimensionais interativas das contribuições no GitHub. Esta ferramenta transforma o histórico de contribuições em uma representação visual profissional e impressionante.
-
----
-
-🔗 Projeto BeOnSafe: https://github.com/ericvasr  
-📬 eric@beonsafe.com.br
-
----
-
-Desenvolvido com 💙 pela BeOnSafe
