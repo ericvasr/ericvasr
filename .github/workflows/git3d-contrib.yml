@@ -369,7 +369,7 @@ jobs:
               images.append({
                   "path": img_path,
                   "tema": tema,
-                  "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                  "data": datetime.now().strftime("%d/%m/%Y %H:%M:%S")
               })
           
           # Salva informações sobre as imagens
@@ -425,43 +425,16 @@ jobs:
           - **Dia mais produtivo:** {pd.to_datetime(max_day).strftime('%d/%m/%Y')} com {max_contrib} contribuições
           - **Imagens de tecnologia geradas:** {len(all_images)} 
           
-          ### 🤖 Últimos Temas de Tecnologia
-          
-          <div align="center">
-          
-          """
-          
-          # Adiciona as imagens mais recentes ao README (até 3 imagens)
-          displayed_images = min(3, len(tech_images))
-          for i in range(displayed_images):
-              img = tech_images[i]
-              img_path = img['path'].replace('images/', '')
-              tema = img['tema']
-              data = img['data']
-              
-              # Cria os URLs relativos para as imagens
-              img_url = f"https://raw.githubusercontent.com/ericvasr/ericvasr/main/images/{img_path}"
-              
-              # Adiciona a imagem ao README com legenda
-              contrib_section += f"""
-          <div style="display: inline-block; margin: 10px; width: 30%;">
-            <img src="{img_url}" alt="{tema}" width="100%" style="border-radius: 10px;">
-            <p><strong>{tema}</strong><br>{data}</p>
-          </div>
-          """
-          
-          # Fecha a div de centralização
-          contrib_section += """
-          </div>
-          
-          #### Temas Recentes
+          ### 🤖 Temas Tecnológicos Recentes
           
           """
           
           # Adiciona lista de temas recentes (até 5)
           for i, img in enumerate(tech_images[:5]):
-              contrib_section += f"- **{img['tema']}** - {img['data']}\n"
-              
+              tema = img['tema']
+              data = img['data']
+              contrib_section += f"- **{tema}** - {data}\n"
+          
           # Procura por uma seção existente para substituir ou adiciona no final
           if "## 📈 Atividade Recente" in readme:
               # Substitui a seção existente
