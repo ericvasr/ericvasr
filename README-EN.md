@@ -75,12 +75,11 @@ Developer with 6 years of experience in technology. Currently focused on automat
 ### GitHub Statistics
 
 <div align="center">
-  <img height="180em" src="https://github-readme-stats.vercel.app/api?username=ericvasr&show_icons=true&theme=dark&bg_color=0d1117&title_color=ffffff&text_color=c9d1d9&icon_color=58a6ff&border_color=30363d&include_all_commits=true&count_private=true" />
-  <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=ericvasr&layout=compact&langs_count=8&theme=dark&bg_color=0d1117&title_color=ffffff&text_color=c9d1d9&border_color=30363d" />
-</div>
 
-<div align="center">
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=ericvasr&theme=dark&background=0d1117&border=30363d&stroke=58a6ff&ring=58a6ff&fire=58a6ff&currStreakNum=ffffff&sideNums=ffffff&currStreakLabel=58a6ff&sideLabels=c9d1d9&dates=c9d1d9" alt="GitHub Streak" />
+[![GitHub Stats](https://github-readme-stats-sigma-five.vercel.app/api?username=ericvasr&show_icons=true&theme=dark&bg_color=0d1117&title_color=ffffff&text_color=c9d1d9&icon_color=58a6ff&border_color=30363d&count_private=true)](https://github.com/ericvasr)
+
+[![Top Languages](https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=ericvasr&layout=compact&langs_count=6&theme=dark&bg_color=0d1117&title_color=ffffff&text_color=c9d1d9&border_color=30363d)](https://github.com/ericvasr)
+
 </div>
 
 ### Contact
