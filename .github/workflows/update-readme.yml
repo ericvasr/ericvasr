@@ -1,4 +1,4 @@
-name: Update README Stats
+name: Refresh Stats Cache
 
 on:
   schedule:
@@ -7,23 +7,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-stats:
-    name: Update GitHub Statistics
+  refresh-cache:
+    name: Refresh Statistics Cache
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Refresh GitHub Stats Cache
+      - name: Refresh Stats Cache
         run: |
-          echo "🔄 Atualizando cache das estatísticas..."
+          echo "🔄 Tentando atualizar cache das estatísticas..."
 
-          # Força refresh das estatísticas GitHub
-          curl -s "https://github-readme-stats.vercel.app/api?username=ericvasr&show_icons=true&theme=dark&bg_color=0d1117&title_color=ffffff&text_color=c9d1d9&icon_color=58a6ff&border_color=30363d&include_all_commits=true&count_private=true&cache_seconds=0" > /dev/null
+          # Tenta diferentes instâncias para maior confiabilidade
+          echo "📊 Atualizando GitHub Stats..."
+          curl -s --connect-timeout 10 --max-time 30 \
+            "https://github-readme-stats.vercel.app/api?username=ericvasr&show_icons=true&theme=dark&bg_color=0d1117&title_color=ffffff&text_color=c9d1d9&icon_color=58a6ff&border_color=30363d&include_all_commits=true&count_private=true&cache_seconds=0" > /dev/null || echo "⚠️ GitHub Stats indisponível"
 
-          curl -s "https://github-readme-stats.vercel.app/api/top-langs/?username=ericvasr&layout=compact&langs_count=8&theme=dark&bg_color=0d1117&title_color=ffffff&text_color=c9d1d9&border_color=30363d&cache_seconds=0" > /dev/null
+          echo "📈 Atualizando Language Stats..."
+          curl -s --connect-timeout 10 --max-time 30 \
+            "https://github-readme-stats.vercel.app/api/top-langs/?username=ericvasr&layout=compact&langs_count=8&theme=dark&bg_color=0d1117&title_color=ffffff&text_color=c9d1d9&border_color=30363d&cache_seconds=0" > /dev/null || echo "⚠️ Language Stats indisponível"
 
-          curl -s "https://github-readme-streak-stats.herokuapp.com/?user=ericvasr&theme=dark&background=0d1117&border=30363d&stroke=58a6ff&ring=58a6ff&fire=58a6ff&currStreakNum=ffffff&sideNums=ffffff&currStreakLabel=58a6ff&sideLabels=c9d1d9&dates=c9d1d9" > /dev/null
+          echo "🔥 Atualizando Streak Stats..."
+          curl -s --connect-timeout 10 --max-time 30 \
+            "https://github-readme-streak-stats.herokuapp.com/?user=ericvasr&theme=dark&background=0d1117&border=30363d&stroke=58a6ff&ring=58a6ff&fire=58a6ff&currStreakNum=ffffff&sideNums=ffffff&currStreakLabel=58a6ff&sideLabels=c9d1d9&dates=c9d1d9" > /dev/null || echo "⚠️ Streak Stats indisponível"
 
-          echo "✅ Cache atualizado com sucesso!"
+          echo "✅ Processo de atualização concluído!"
+          echo "ℹ️ As estatísticas podem levar alguns minutos para atualizar nos serviços externos."
