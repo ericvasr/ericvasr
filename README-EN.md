@@ -13,7 +13,8 @@
 <h3 align="center">Developer & Automation Specialist</h3>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Development-6%20years-black?style=flat-square&labelColor=333333&color=666666" alt="Experience" />
+  <img src="https://img.shields.io/badge/Technology-20%2B%20years-black?style=flat-square&labelColor=333333&color=666666" alt="Technology Experience" />
+  <img src="https://img.shields.io/badge/Development-6%20years-black?style=flat-square&labelColor=333333&color=666666" alt="Development Experience" />
   <img src="https://img.shields.io/badge/Focus-Automation%20%26%20AI-black?style=flat-square&labelColor=333333&color=666666" alt="Focus" />
   <img src="https://img.shields.io/badge/Location-Brazil-black?style=flat-square&labelColor=333333&color=666666" alt="Location" />
 </div>
@@ -22,7 +23,8 @@
 
 ### About
 
-Developer with 6 years of experience in technology. Currently focused on automation development using n8n and artificial intelligence integration. Leading the BeonSafe-Opensource project to democratize access to self-hosted automation technologies.
+Technology professional with over 20 years of experience, with 6 years specifically focused on systems development. Currently dedicated to automation development using n8n and artificial intelligence integration.
+Leading the BeonSafe-Opensource project to democratize access to self-hosted automation technologies.
 
 ### Current Work
 
@@ -67,7 +69,8 @@ Developer with 6 years of experience in technology. Currently focused on automat
 
 ### Experience
 
-- **2019-2025**: 6 years in technology development
+- **2004-2025**: 20+ years of technology experience
+- **2019-2025**: 6 years in systems development
 - **2022-2025**: 3 years focused on automation and AI projects
 - **2021-2025**: Creator and lead of BeonSafe-Opensource initiative
 - **Current**: Self-hosted technologies educator and mentor
