@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./public/playtape.gif" width="70%" height="350" style="object-fit: cover;" alt="Eric Ribeiro - Developer & Automation Specialist" />
+  <img src="./public/playtape.gif" width="100%" height="350" style="object-fit: cover;" alt="Eric Ribeiro - Developer & Automation Specialist" />
 </div>
 
 <div align="center">
