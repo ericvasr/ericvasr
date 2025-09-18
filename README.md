@@ -73,7 +73,7 @@ Lidero o projeto BeonSafe-Opensource para democratizar o acesso a tecnologias de
 - **2019-2025**: 6 anos em desenvolvimento de sistemas
 - **2022-2025**: 3 anos focado em projetos de automação e IA
 - **2021-2025**: Criador e líder da iniciativa BeonSafe-Opensource
-- **Atual**: Educador em tecnologias self-hosted e mentor
+- **Atual**: Engenheiro de software Pleno Alcate-IA
 
 ### Estatísticas GitHub
 
