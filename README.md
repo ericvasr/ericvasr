@@ -178,9 +178,18 @@ scope:
 
 <br />
 
-<!-- Trophies -->
+<!-- Profile Summary Cards -->
 <div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=ericvasr&theme=darkhub&no-frame=true&no-bg=true&column=7&margin-w=10" width="98%" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=ericvasr&theme=github_dark" width="32%" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=ericvasr&theme=github_dark" width="32%" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=ericvasr&theme=github_dark" width="32%" />
+</div>
+
+<br />
+
+<!-- Profile Summary - Full Width -->
+<div align="center">
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=ericvasr&theme=github_dark" width="98%" />
 </div>
 
 ---
