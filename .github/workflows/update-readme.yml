@@ -30,7 +30,7 @@ jobs:
 
           echo "🔥 Atualizando Streak Stats..."
           curl -s --connect-timeout 10 --max-time 30 \
-            "https://github-readme-streak-stats.herokuapp.com/?user=ericvasr&theme=dark&background=0d1117&border=30363d&stroke=58a6ff&ring=58a6ff&fire=58a6ff&currStreakNum=ffffff&sideNums=ffffff&currStreakLabel=58a6ff&sideLabels=c9d1d9&dates=c9d1d9" > /dev/null || echo "⚠️ Streak Stats indisponível"
+            "https://streak-stats.demolab.com/?user=ericvasr&theme=black-ice&background=0d1117&ring=58a6ff&fire=58a6ff&currStreakNum=ffffff&sideNums=ffffff&currStreakLabel=58a6ff&sideLabels=c9d1d9&dates=6e7681" > /dev/null || echo "⚠️ Streak Stats indisponível"
 
           echo "✅ Processo de atualização concluído!"
           echo "ℹ️ As estatísticas podem levar alguns minutos para atualizar nos serviços externos."

@@ -11,11 +11,11 @@
   <a href="https://github.com/ericvasr">
     <img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github&logoColor=white&labelColor=1a1a1a" />
   </a>
-  <a href="mailto:eric@beonsafe.com">
+  <a href="mailto:eric@grupoalcate-ia.com">
     <img src="https://img.shields.io/badge/Email-black?style=flat-square&logo=gmail&logoColor=EA4335&labelColor=1a1a1a" />
   </a>
-  <a href="https://ericribeiro.dev.br">
-    <img src="https://img.shields.io/badge/Portfolio-black?style=flat-square&logo=googlechrome&logoColor=4285F4&labelColor=1a1a1a" />
+  <a href="https://github.com/beonsafe">
+    <img src="https://img.shields.io/badge/BeOnSafe-black?style=flat-square&logo=github&logoColor=white&labelColor=1a1a1a" />
   </a>
 </div>
 
@@ -31,22 +31,22 @@
 ---
 
 <h1 align="center">Eric Ribeiro</h1>
-<h3 align="center">Software & AI Engineer · Technical Lead · Automation Architect</h3>
+<h3 align="center">Head of Infrastructure & DevOps · Technical Lead · Grupo Alcate-IA</h3>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Tech-20%2B%20years-black?style=flat-square&labelColor=1a1a1a&color=58a6ff" />
   <img src="https://img.shields.io/badge/Development-6%2B%20years-black?style=flat-square&labelColor=1a1a1a&color=58a6ff" />
-  <img src="https://img.shields.io/badge/Focus-AI%20%26%20Automation-black?style=flat-square&labelColor=1a1a1a&color=58a6ff" />
-  <img src="https://img.shields.io/badge/Location-Florianópolis%2C%20BR-black?style=flat-square&labelColor=1a1a1a&color=58a6ff" />
+  <img src="https://img.shields.io/badge/Focus-Infra%2C%20DevOps%20%26%20AI-black?style=flat-square&labelColor=1a1a1a&color=58a6ff" />
+  <img src="https://img.shields.io/badge/Location-Criciúma%2C%20SC%20·%20BR-black?style=flat-square&labelColor=1a1a1a&color=58a6ff" />
 </p>
 
 ---
 
 ### `> whoami`
 
-Engenheiro de Software e IA com mais de 20 anos em tecnologia e 6+ anos em desenvolvimento de sistemas. Atuo na interseção entre **automação inteligente**, **arquitetura self-hosted** e **liderança técnica** — transformando complexidade operacional em sistemas que funcionam com mínima intervenção humana.
+Head de Infraestrutura e DevOps no **Grupo Alcate-IA**, com mais de 20 anos em tecnologia. Respondo pela plataforma que sustenta a operação: arquitetura, confiabilidade, automação e segurança, do provisionamento ao deploy. Atuo na interseção entre **infraestrutura self-hosted**, **automação inteligente** e **liderança técnica**, transformando complexidade operacional em sistemas que rodam com mínima intervenção humana.
 
-Lidero squads de desenvolvimento e automação no **Grupo Alcate-IA**, onde projeto e implemento agentes de IA, pipelines de automação e integrações entre sistemas corporativos. Paralelamente, fundei a **BeOnSafe**, uma comunidade open-source focada em democratizar o acesso a tecnologias de IA e automação.
+Lidero o time de infra e DevOps, defino o padrão de engenharia e uso **IA como alavanca** para escalar o que a equipe entrega, com custo e risco sob controle. Paralelamente, mantenho a **BeOnSafe**, comunidade open-source focada em democratizar IA, automação e infraestrutura self-hosted.
 
 Meu princípio: **tecnologia só tem valor se elimina atrito e gera resultado mensurável.**
 
@@ -55,15 +55,15 @@ Meu princípio: **tecnologia só tem valor se elimina atrito e gera resultado me
 ### `> current_role`
 
 ```yaml
-company: Grupo Alcate-IA · Brasil
-role: Software & AI Engineer | Technical Lead
+company: Grupo Alcate-IA · Criciúma, SC · Brasil
+role: Head of Infrastructure & DevOps | Technical Lead
 scope:
-  - Arquitetura e desenvolvimento de sistemas e APIs
-  - Agentes de IA aplicados a processos de negócio
-  - Pipelines de automação end-to-end
-  - Integração entre CRMs, ERPs e canais de atendimento
-  - Liderança técnica de squads de dev e automação
-  - Definição de padrões, code review e mentoria
+  - Arquitetura, confiabilidade e operação da plataforma
+  - Infraestrutura self-hosted, provisionamento e deploy
+  - Pipelines de automação e CI/CD end-to-end
+  - Observabilidade, segurança e continuidade operacional
+  - IA aplicada como alavanca de engenharia e automação
+  - Liderança do time de infra e DevOps, padrões e mentoria
 ```
 
 ---
@@ -152,17 +152,17 @@ scope:
 <div align="center">
 
 <!-- GitHub Streak -->
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=ericvasr&theme=black-ice&hide_border=true&background=0d1117&ring=58a6ff&fire=58a6ff&currStreakLabel=58a6ff&sideLabels=c9d1d9&dates=6e7681&currStreakNum=ffffff&sideNums=ffffff" width="49%" />
+<img src="https://streak-stats.demolab.com/?user=ericvasr&theme=black-ice&hide_border=true&background=0d1117&ring=58a6ff&fire=58a6ff&currStreakLabel=58a6ff&sideLabels=c9d1d9&dates=6e7681&currStreakNum=ffffff&sideNums=ffffff" width="49%" />
 
 <!-- GitHub Stats -->
-<img src="https://github-readme-stats-sigma-five.vercel.app/api?username=ericvasr&show_icons=true&theme=dark&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&border_color=30363d&count_private=true&hide_border=true&include_all_commits=true&custom_title=GitHub%20Stats" width="49%" />
+<img src="https://github-readme-stats.vercel.app/api?username=ericvasr&show_icons=true&theme=dark&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&border_color=30363d&count_private=true&hide_border=true&include_all_commits=true&custom_title=GitHub%20Stats" width="49%" />
 
 </div>
 
 <div align="center">
 
 <!-- Top Languages -->
-<img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=ericvasr&layout=compact&langs_count=8&theme=dark&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&border_color=30363d&hide_border=true&custom_title=Most%20Used%20Languages" width="49%" />
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ericvasr&layout=compact&langs_count=8&theme=dark&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&border_color=30363d&hide_border=true&custom_title=Most%20Used%20Languages" width="49%" />
 
 <!-- Profile Summary - Productive Time -->
 <img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=ericvasr&theme=github_dark&utcOffset=-3" width="49%" />
@@ -221,9 +221,9 @@ Comunidade educacional independente focada em democratizar o acesso a tecnologia
    │
 2022 ──── Especialização em automação e IA aplicada
    │
-2024 ──── Technical Lead · Squads de Dev & Automação
+2024 ──── Liderança técnica de infra, DevOps & automação
    │
-now  ──── Software & AI Engineer @ Grupo Alcate-IA
+now  ──── Head of Infrastructure & DevOps @ Grupo Alcate-IA · Criciúma-SC
 ```
 
 ---
