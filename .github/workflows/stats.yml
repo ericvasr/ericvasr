@@ -4,12 +4,7 @@ name: Stats SVG
 on:
   schedule:
     - cron: "17 5 * * *"   # diário, 05:17 UTC
-  workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - scripts/gen_github_svg.py
-      - .github/workflows/stats.yml
+  workflow_dispatch:        # rodar sob demanda; sem gatilho em push para não competir com commits locais
 
 permissions:
   contents: write
