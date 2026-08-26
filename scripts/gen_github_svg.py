@@ -38,6 +38,7 @@ def fmt(n):
 # --- paleta (casada com o README) ---
 BG="#0d1117"; CARD="#0d1117"; BORDER="#30363d"; ACCENT="#58a6ff"; HI="#e6edf3"; MID="#8b949e"
 FONT="'Segoe UI',Ubuntu,'Helvetica Neue',sans-serif"
+CARD_W, CARD_H = 480, 200   # dimensões idênticas nos dois cards → alinham lado a lado no README
 
 def card(w,h,inner,title):
     return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img">
@@ -58,7 +59,7 @@ def stats_svg(u):
         ("Seguidores", u["followers"]["totalCount"]),
         ("Stars", stars),
     ]
-    w,h=480,196; cols=3; cw=(w-52)/cols; y0=70; rh=58; inner=""
+    w,h=CARD_W,CARD_H; cols=3; cw=(w-52)/cols; y0=76; rh=62; inner=""
     for i,(lab,val) in enumerate(tiles):
         cx=26+(i%cols)*cw; cy=y0+(i//cols)*rh
         inner+=(f'<text x="{cx:.0f}" y="{cy:.0f}" font-family="{FONT}" font-size="26" font-weight="700" fill="{HI}">{fmt(val)}</text>'
@@ -71,7 +72,7 @@ def langs_svg(u):
         for e in r["languages"]["edges"]:
             langs[e["node"]["name"]]+=e["size"]; colors[e["node"]["name"]]=e["node"]["color"] or MID
     top=langs.most_common(6); tot=sum(v for _,v in top) or 1
-    w,h=480,206; bx,by,bw,bh=26,58,w-52,16; inner=""; x=bx
+    w,h=CARD_W,CARD_H; bx,by,bw,bh=26,60,w-52,16; inner=""; x=bx
     for n,v in top:
         seg=bw*v/tot
         inner+=f'<rect x="{x:.1f}" y="{by}" width="{seg:.1f}" height="{bh}" fill="{colors[n]}"/>'
