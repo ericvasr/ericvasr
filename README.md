@@ -149,47 +149,11 @@ scope:
 
 ### `> metrics`
 
+<!-- Cards gerados por mim a partir da API do GitHub (assets/*.svg no próprio repo).
+     Atualizados por .github/workflows/stats.yml. Sem SSR de terceiro = sem 503, sem imagem quebrada. -->
 <div align="center">
-
-<!-- GitHub Streak -->
-<img src="https://streak-stats.demolab.com/?user=ericvasr&theme=black-ice&hide_border=true&background=0d1117&ring=58a6ff&fire=58a6ff&currStreakLabel=58a6ff&sideLabels=c9d1d9&dates=6e7681&currStreakNum=ffffff&sideNums=ffffff" width="49%" />
-
-<!-- GitHub Stats -->
-<img src="https://github-readme-stats.vercel.app/api?username=ericvasr&show_icons=true&theme=dark&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&icon_color=58a6ff&border_color=30363d&count_private=true&hide_border=true&include_all_commits=true&custom_title=GitHub%20Stats" width="49%" />
-
-</div>
-
-<div align="center">
-
-<!-- Top Languages -->
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=ericvasr&layout=compact&langs_count=8&theme=dark&bg_color=0d1117&title_color=58a6ff&text_color=c9d1d9&border_color=30363d&hide_border=true&custom_title=Most%20Used%20Languages" width="49%" />
-
-<!-- Profile Summary - Productive Time -->
-<img src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=ericvasr&theme=github_dark&utcOffset=-3" width="49%" />
-
-</div>
-
-<br />
-
-<!-- Activity Graph -->
-<div align="center">
-  <img src="https://github-readme-activity-graph.vercel.app/graph?username=ericvasr&bg_color=0d1117&color=58a6ff&line=58a6ff&point=c9d1d9&area=true&area_color=58a6ff&hide_border=true&custom_title=Contribution%20Activity" width="98%" />
-</div>
-
-<br />
-
-<!-- Profile Summary Cards -->
-<div align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=ericvasr&theme=github_dark" width="32%" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=ericvasr&theme=github_dark" width="32%" />
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/stats?username=ericvasr&theme=github_dark" width="32%" />
-</div>
-
-<br />
-
-<!-- Profile Summary - Full Width -->
-<div align="center">
-  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=ericvasr&theme=github_dark" width="98%" />
+  <img src="./assets/stats.svg" alt="GitHub stats" width="49%" />
+  <img src="./assets/langs.svg" alt="Linguagens mais usadas" width="49%" />
 </div>
 
 ---

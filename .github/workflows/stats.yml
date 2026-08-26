@@ -1,0 +1,41 @@
+name: Stats SVG
+# Regenera assets/*.svg a partir da API do GitHub e commita se mudou.
+# Cards viram asset do repo — imunes a 503 de serviço de terceiro.
+on:
+  schedule:
+    - cron: "17 5 * * *"   # diário, 05:17 UTC
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/gen_github_svg.py
+      - .github/workflows/stats.yml
+
+permissions:
+  contents: write
+
+jobs:
+  gen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Gerar SVGs
+        env:
+          # GH_STATS_TOKEN (opcional) inclui dados privados; sem ele usa o token do runner (dados públicos)
+          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN || github.token }}
+          GH_USER: ericvasr
+        run: python3 scripts/gen_github_svg.py
+      - name: Commit se mudou
+        run: |
+          if [ -n "$(git status --porcelain assets)" ]; then
+            git config user.name "Eric Ribeiro"
+            git config user.email "eric@grupoalcate-ia.com"
+            git add assets/*.svg
+            git commit -m "chore: atualiza cards de stats (auto)"
+            git push
+          else
+            echo "sem mudança nos cards"
+          fi
